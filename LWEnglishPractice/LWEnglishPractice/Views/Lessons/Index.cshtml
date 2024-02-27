@@ -1,0 +1,276 @@
+﻿@model IEnumerable<LWEnglishPractice.Entities.Lesson>
+@using LWEnglishPractice.Entities;
+@{
+    ListenAndWriteContext context = new ListenAndWriteContext();
+    List <Level> level = context.Level.Where(a => a.Active == 1).ToList();
+}
+
+<div class="">
+
+    <form asp-action="CreateOrEdit" asp-controller="Lessons" method="post" onsubmit="return onSubmitForm()" enctype="multipart/form-data">
+        <input id="action" type="hidden" name="action" />
+        <input id="Idlesson" type="hidden" name="Idlesson" />
+        <div class="bg-light p-1 border border-secondary rounded">
+            <h2>Lessons Management</h2>
+
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <div class="row d-flex align-items-center">
+                        <div class="col-md-2 col-sm-12">
+                            Level
+                        </div>
+                        <div class="col-md-10 col-sm-12">
+                            <select id="multipleSelect" name="Idlevel" class="Idlevel" data-search="true"
+                                    data-silent-initial-value-set="true">
+                                @foreach (var item in level)
+                                {
+                                    <option value="@item.Idlevel">@item.Levelname</option>
+                                }
+
+                            </select>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="row d-flex align-items-center">
+                        <div class="col-md-2 col-sm-12">
+                            Lesson Name
+                        </div>
+                        <div class="col-md-10 col-sm-12">
+                            <textarea name="Lessonanme" id="Lessonname" maxlength="255" onfocus="this.value=''" style="height:14px" type="text" class="form-control"></textarea>
+                            <span id="checkLessonname" class="text-danger"></span>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="row mt-2">
+
+                <div class="col-md-6 col-sm-12">
+                    <div class="row d-flex align-items-center">
+                        <div class="col-md-2 col-sm-12">
+                            Describe
+                        </div>
+                        <div class="col-md-10 col-sm-12">
+                            <textarea name="Describe" id="Describe" maxlength="255" type="text" style="height:14px" class="form-control"></textarea>
+                            <span id="checkDescribe" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12">
+                    <div class="row d-flex align-items-center">
+
+                        <div class="col-md-4 col-sm-12">
+                            Date Created
+                        </div>
+                        <div class="col-md-8 col-sm-12">
+                            <input type="date" id="Datecreate" disabled name="Datecreate" maxlength="255"
+                                   class="form-control">
+                            <span class="text-danger"></span>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12 ">
+                    <button type="submit" style="float: right;" class="btn btn-primary w-100" id="btnAdd">Thêm</button>
+                    <div class="d-flex">
+                        <button type="button" style="display:none;" class="btn btn-light w-50" id="btnCancel">Hủy</button>
+                        <button type="submit" class="btn btn-primary w-50" onclick="onEdit()" id="btnUpdate" style="display:none; float: right;">
+                            Cập
+                            nhật
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+            
+
+        </div>
+
+    </form>
+
+</div>
+<div class="x_content">
+    <div class="row">
+        <div class="col-sm-12" style="height:60vh;overflow-y:scroll">
+            <div class="card-box table-responsive">
+
+
+                <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap"
+                       cellspacing="0" width="100%">
+                    <thead>
+                        <tr class="text-center">
+                            <th>Level</th>
+                            <th>Lesson Name</th>
+                            <th>Describe</th>
+                            <th>Date Create</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="d-none">
+                            <td>.</td>
+                            <td>.</td>
+                            <td>.</td>
+                            <td>.</td>
+
+                        </tr>
+                        @foreach (var item in Model)
+                        {
+                    <tr>
+                        <td>@item.IdlevelNavigation.Levelname</td>
+                        <td>@item.Lessonanme</td>
+                        <td>@item.Describe</td>
+
+                        @if (item.Datecreate != null)
+                        {
+                            DateTime Datecreate = (DateTime)item.Datecreate;
+                            <td>@Datecreate.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)</td>
+                            <td class="d-none">@Datecreate.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture)</td>
+                        }
+                        else
+                        {
+                            <td></td>
+                            <td></td>
+                        }
+                        <td class="d-none">@item.Idlesson</td>
+                        <td class="d-none">@item.Idlevel</td>
+
+
+                        <td class="table-td-center d-flex">
+                            <a class="btn  btn-sm btn-warning " onclick="onEdit(this)"><i class="fas fa-edit text-white"></i></a>
+                            <form class="formDelete" asp-action="Delete" asp-route-id="@item.Idlesson" asp-controller="Lessons">
+                                <button type="submit" class="btn  btn-sm btn-danger "><i class="fas fa-trash text-white"></i></button>
+                            </form>
+
+                        </td>
+                    </tr>
+                        }
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    let deleteBtns = document.querySelectorAll('.formDelete');
+    deleteBtns.forEach(function (deleteBtn) {
+        deleteBtn.addEventListener('submit', function (e) {
+
+            var form = this;
+
+            e.preventDefault();
+
+            swal({
+                title: 'Bạn có chắc chắn muốn xóa?',
+
+                icon: 'warning',
+                buttons: ['Hủy bỏ!', 'Xác nhận'],
+                dangerMode: true,
+            }).then(function (isConfirm) {
+                if (isConfirm) {
+
+                    form.submit();
+                    swal({
+                        title: 'Đã xóa!',
+                        icon: 'success',
+                        timer: 1500,
+                        button: false,
+                    });
+
+                } else {
+                    swal({
+                        title: 'Đã hủy!',
+                        button: false,
+                        icon: 'error',
+                        timer: 500,
+                    });
+                }
+            });
+        });
+    })
+
+
+
+    function onSubmitForm() {
+        let isSubmit = false;
+        let checkDescribe = document.getElementById("checkDescribe");
+        let checkLessonname = document.getElementById("checkLessonname");
+        let Lessonname = document.getElementById("Lessonname").value;
+        let Describe = document.getElementById("Describe").value;
+
+
+        let errorMessage = "Vui lòng cung cấp thông tin!";
+
+        if (Lessonname.length == 0) {
+            checkLessonname.innerText = errorMessage;
+
+        }
+       
+        if (Describe.length == 0) {
+            checkDescribe.innerText = errorMessage;
+
+        }
+       
+        else {
+            isSubmit = true;
+        }
+        return isSubmit;
+    }
+
+
+    let btnAdd = document.getElementById("btnAdd");
+    let btnUpdate = document.getElementById("btnUpdate");
+    let btnCancel = document.getElementById("btnCancel");
+    let action = document.getElementById("action");
+
+    btnCancel.addEventListener("click", function () {
+        btnUpdate.style.display = "none";
+        btnCancel.style.display = "none";
+        btnAdd.style.display = "block";
+        document.getElementById("Datecreate").disabled = true;
+    })
+
+
+    btnAdd.addEventListener("click", function () {
+        action.value = "addItem";
+    })
+    btnUpdate.addEventListener("click", function () {
+        action.value = "editItem";
+
+    })
+
+
+    function onEdit(td) {
+        document.getElementById("Datecreate").disabled = false;
+        selectedRow = td.parentElement.parentElement;
+        document.getElementById("Lessonname").value = selectedRow.cells[1].innerHTML;
+        document.getElementById("Describe").value = selectedRow.cells[2].innerHTML;
+        if (selectedRow.cells[4].innerHTML != "") {
+            var Datecreate = selectedRow.cells[4].innerHTML;
+            document.getElementById("Datecreate").value = Datecreate;
+        }
+        document.getElementById("Idlesson").value = selectedRow.cells[5].innerHTML;
+        document.querySelector(".Idlevel").value = selectedRow.cells[6].innerHTML;
+        document.querySelector(".vscomp-value").innerText = selectedRow.cells[0].innerHTML;
+      
+
+        btnAdd.style.display = "none";
+        btnUpdate.style.display = "block";
+        btnCancel.style.display = "block";
+
+    }
+    btnUpdate.addEventListener("click", function () {
+        btnAdd.style.display = "block";
+        btnUpdate.style.display = "none";
+        btnCancel.style.display = "none";
+
+    })
+</script>

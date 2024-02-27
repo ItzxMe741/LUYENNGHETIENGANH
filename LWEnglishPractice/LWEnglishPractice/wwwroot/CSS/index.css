@@ -1,0 +1,299 @@
+/**{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body {
+    background-color: #fff;
+    overflow-x: hidden;
+     font-family: "Nunito", sans-seri; 
+}
+
+.bg-white {
+    background-color: #fff
+}
+
+.navbar-brand {
+    padding: 23.5px 20px;
+    font-size: 18px
+}
+
+.navbar-nav {
+    width: 100%
+}
+
+.nav-item {
+    padding: 20px 8px;
+    margin: 0px 3px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 16px;
+    color: grey;
+    position: static
+}
+
+.nav-item.active {
+    color: #17A2B8
+}
+
+.nav-item:hover {
+    color: #17A2B8
+}
+
+a {
+    color: inherit !important
+}
+
+.nav-link {
+    padding: 5px
+}
+
+.navbar-collapse.collapse.in {
+    display: block !important
+}
+
+.fa-angle-down {
+    padding-left: 20px
+}
+
+.fa-icon {
+    font-size: 30px;
+    color: #fff;
+    background-color: #fff;
+    margin: 2px 10px 5px 0px;
+    border-radius: 10px;
+    width: 50px;
+    height: 50px
+}
+
+.dropdown-menu {
+    margin-top: 0px;
+    border: none;
+    background-color: #F3E5F5;
+    padding: 50px 50px 30px 50px
+}
+
+#dropdown-menu1 {
+    position: absolute;
+    left: 165px
+}
+
+#dropdown-menu2 {
+    position: absolute;
+    left: 285px
+}
+
+#dropdown-menu3 {
+    position: absolute;
+    left: 415px
+}
+
+.tab {
+    margin-bottom: 10px;
+
+}
+
+.tab:hover {
+    color: #17A2B8!important
+}
+
+.dropdown-item {
+    padding: 0px
+}
+
+.dropdown-item:hover {
+    background-color: inherit
+}
+
+@media (max-width: 767px) {
+    .nav-item {
+        width: 100%;
+        text-align: left;
+        padding-left: 10px
+    }
+
+    .dropdown-menu {
+        left: 0 !important;
+        position: relative !important;
+        padding: 20px
+    }
+}body {
+    background-color: #ffffff;
+    overflow-x: hidden
+}
+
+.bg-white {
+    background-color: #fff
+}
+
+.navbar-brand {
+    padding: 23.5px 20px;
+    font-size: 18px
+}
+
+.navbar-nav {
+    width: 100%
+}
+
+.nav-item {
+    padding: 20px 8px;
+    margin: 0px 3px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 16px;
+    color: grey;
+    position: static
+}
+
+.nav-item.active {
+    color: #17A2B8
+}
+
+.nav-item:hover {
+    color: #17A2B8
+}
+
+a {
+    color: inherit !important
+}
+
+.nav-link {
+    padding: 5px
+}
+
+.navbar-collapse.collapse.in {
+    display: block !important
+}
+
+.fa-angle-down {
+    padding-left: 1px
+}
+
+.fa-icon {
+    font-size: 20px;
+    color: #fff;
+    background-color: #17A2B8;
+    margin: 2px 10px 5px 0px;
+    border-radius: 10px;
+    width: 30px;
+    height: 30px
+}
+
+.dropdown-menu {
+    margin-top: 0px;
+    border: none;
+    background-color: #fff;
+    padding: 20px 0px 20px 20px;
+    box-shadow: -1px -5px 7px 0px #d7d0d0;
+}
+
+#dropdown-menu1 {
+    position: absolute;
+    left: 165px
+}
+
+#dropdown-menu2 {
+    position: absolute;
+    left: 285px
+}
+
+#dropdown-menu3 {
+    position: absolute;
+    left: 415px
+}
+
+.tab {
+    margin-bottom: 10px;
+    width: 250px
+}
+
+.tab:hover {
+    color: #17A2B8 !important
+}
+
+.dropdown-item {
+    padding: 0px
+}
+
+.dropdown-item:hover {
+    background-color: inherit
+}
+
+@media (max-width: 767px) {
+    .nav-item {
+        width: 100%;
+        text-align: left;
+        padding-left: 10px
+    }
+
+    .dropdown-menu {
+        left: 0 !important;
+        position: relative !important;
+        padding: 10px
+    }
+}*/
+
+body {
+    font-family: Arial;
+}
+
+/* Style the tab */
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+    /* Style the buttons inside the tab */
+    .tab button {
+        background-color: inherit;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+        font-size: 17px;
+    }
+
+        /* Change background color of buttons on hover */
+        .tab button:hover {
+            background-color: #ddd;
+        }
+
+        /* Create an active/current tablink class */
+        .tab button.active {
+            background-color: #ccc;
+        }
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    -webkit-animation: fadeEffect 1s;
+    animation: fadeEffect 1s;
+}
+
+/* Fade in tabs */
+@-webkit-keyframes fadeEffect {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeEffect {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+
+

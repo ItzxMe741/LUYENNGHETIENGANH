@@ -1,0 +1,418 @@
+﻿@model LWEnglishPractice.Entities.Learner;
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listen And Write English</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="~/Style/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Style/ListenAndWrite.css">
+
+</head>
+
+
+<body>
+    <div class="row " style="width: 100vw; height: 100vh; background-image: url('https://leverageedublog.s3.ap-south-1.amazonaws.com/blog/wp-content/uploads/2019/11/23173331/Best-Books-for-GRE.png'); background-position: center; background-repeat: no-repeat; background-size: cover; ">
+        <div class="col-md-2 mt-5">
+            <h3 class="text-center logoCVG">CVG ENGLISH</h3>
+            <div class="">
+                <div id="homeBtn" class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
+
+                    <a href="/Home/Index" style="text-decoration: none;" class="text-dark">
+                        <span style="font-size:32px; margin-right: 10px;">
+                            <i style="color: #58CC02;"
+                               class="fa-solid fa-house "></i>
+                        </span> LEARNING
+                    </a>
+                </div>
+                <div id="homeBtn" class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
+
+                    <a href="/Home/Statistics" style="text-decoration: none;" class="text-dark">
+                        <span style="font-size:32px; margin-right: 10px;">
+                            <i style="color: #58CC02;"
+                               class="fa-solid fa-house "></i>
+                        </span> STATISTICS
+                    </a>
+                </div>
+                <di id="rankingBtn" class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
+
+                    <a href="/Home/Ranking" style="text-decoration: none;" class="text-dark">
+                        <span style="font-size:32px; margin-right: 10px;">
+                            <i style="color: #58CC02;"
+                               class="fa-solid fa-ranking-star "></i>
+                        </span> RANKING
+
+                    </a>
+            </div>
+            <div id="profileBtn" class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
+
+                <a href="/Home/Profile" style="text-decoration: none;" class="text-dark">
+                    <span style="font-size:32px; margin-right: 20px;">
+                        <i style="color: #58CC02;"
+                           class="fa-solid fa-user "></i>
+                    </span> PROIFILE
+                </a>
+            </div>
+            
+            <div class=" align-items-center rounded-3 sidebar p-4 pt-0 pb-0" id="NoCookieName" style="display:none">
+
+                <a href="/Login/Logout" style="text-decoration: none;" class="text-dark">
+                    <span style="font-size:32px; margin-right: 20px;">
+
+                        <i style="color: red;" class="fa-solid fa-power-off"></i>
+                    </span> LOG OUT
+                </a>
+            </div>
+            <div class=" align-items-center rounded-3 sidebar p-4 pt-0 pb-0" id="HascookieName" style="display:none">
+
+                <a href="/Login/Login" style="text-decoration: none;" class="text-dark">
+                    <span style="font-size:32px; margin-right: 20px;">
+
+                        <i style="color: #58CC02;" class="fa-solid fa-user-plus"></i>
+                    </span> LOG IN
+                </a>
+            </div>
+
+        </div>
+        <div class="col-md-10"
+             style="max-height: 100vh; overflow-y:scroll; border-left: 1px solid #ccc;">
+
+
+            <div id="profile" class="mt-5 fade">
+                <div class="row align-items-center">
+                    <div class="col-md-3" style="position: relative;">
+                        @if (Model.Image != null)
+                        {
+                            <img src="~/Images/@Model.Image" class="rounded-circle" style="width: 200px;height: 200px"
+                                 alt="My avatar">
+                        }
+                        else
+                        {
+                            <img src="~/Images/logo.jpg" class="rounded-circle" style="width: 200px;height: 200px"
+                                 alt="My avatar">
+                        }
+
+                        <label for="changeImage" class="btn border-0" style="position:absolute; top: 0; left: 150px;font-size: 24px;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;"><i class="fas fa-pen"></i></label>
+                        <form id="formChangeImage" asp-action="EditPersonalInformation" asp-controller="Learners" method="post" enctype="multipart/form-data">
+                            <input type="file" id="changeImage" name="Source" class="d-none" />
+                            <input type="hidden" name="Idlearner" value="@Model.Idlearner" class="form-control">
+                            <input type="hidden" name="Email" value="@Model.Email" class="form-control">
+                            <input type="hidden" name="Password" value="@Model.Password" class="form-control">
+                            <input type="hidden" name="Joindate" value="@Model.Joindate" class="form-control">
+                            <input type="hidden" name="Sex" value="@Model.Sex" class="form-control">
+                            <input type="hidden" name="Dateofbirth" value="@Model.Dateofbirth" class="form-control">
+                            <input type="hidden" name="Fullname" value="@Model.Fullname" class="form-control">
+
+                            <input type="hidden" name="action" value="editAvatar" class="form-control">
+
+                        </form>
+                    </div>
+                    <div class="col-md-6 ">
+                        <div class="" style="font-weight: bold; font-size:32px">
+                            @Model.Fullname
+                            @if (Model.Sex.Equals("Nam"))
+                            {
+                                <i class="fas fa-mars" style="color: #1C92F7; font-size:34px"></i>
+                            }
+                            @if (Model.Sex.Equals("Nữ"))
+                            {
+                                <i class="fas fa-venus" style="color: #DA4CA2; font-size: 34px"></i>
+                            }
+                            @if (Model.Sex.Equals("Khác"))
+                            {
+                                <i class="fas fa-user" style=" font-size: 34px"></i>
+                            }
+                        </div>
+                        <div class=""><i class="fa-solid fa-envelope"></i> Email Address: @Model.Email</div>
+                        @if (Model.Joindate != null)
+                        {
+                            DateTime Joindate = (DateTime)@Model.Joindate;
+                            <div class=""><i class="fa-solid fa-clock "></i> Join Date: @Joindate.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)</div>
+
+                        }
+
+                        @if (Model.Dateofbirth != null)
+                        {
+                            DateTime Dateofbirth = (DateTime)@Model.Dateofbirth;
+                            <div class=""><i class="fa-solid fa-clock "></i> Date Of Birth: @Dateofbirth.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)</div>
+
+                        }
+                        else
+                        {
+                            <div class=""><i class="fa-solid fa-clock "></i> Date Of Birth: </div>
+
+                        }
+                    </div>
+                    <div class="col-md-3">
+                        <button id="editProfileBtn" class="btn text-white w-100" style="background-color: #58CC02;">
+                            <i class="fa-solid fa-pencil text-white mr-2"></i> EDIT PROFILE
+                        </button>
+                    </div>
+                </div>
+                <div id="editProfileForm" style="display: none" class="fade">
+                    <div class=" p-1 mt-5">
+                        <h3>Personal Infomation</h3>
+                        <form id="firstForm" asp-action="EditPersonalInformation" asp-controller="Learners" enctype="multipart/form-data" onsubmit="return firstForm()">
+                            <input type="hidden" name="Idlearner" value="@Model.Idlearner" class="form-control">
+                            <input type="hidden" name="Email" value="@Model.Email" class="form-control">
+                            <input type="hidden" name="Password" value="@Model.Password" class="form-control">
+                            <input type="hidden" name="Joindate" value="@Model.Joindate" class="form-control">
+                            <input type="hidden" name="Image" value="@Model.Image" class="form-control">
+                            <input type="hidden" name="action" value="info" class="form-control">
+
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12">
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-md-3 col-sm-12">
+                                            Full Name
+                                        </div>
+                                        <div class="col-md-9 col-sm-12">
+                                            <input type="text" name="Fullname" id="Fullname" class="form-control">
+                                            <span id="checkFullname" class="text-danger"></span>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 col-sm-12">
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-md-6 col-sm-12">
+                                            Date Of Birth
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <input type="date" id="Dateofbirth" name="Dateofbirth" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-12">
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-md-3 col-sm-12">
+                                            Sex
+                                        </div>
+                                        <div class="col-md-9 col-sm-12">
+                                            <select name="Sex" id="" class="form-control">
+                                                <option value="Name">Nam</option>
+                                                <option value="Nữ">Nữ</option>
+                                                <option value="Khác">Khác</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row mt-2">
+                                <div class="col-md-9 col-sm-12">
+                                    <div class="row d-flex align-items-center">
+
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-12 ">
+                                    <input type="submit" style="float: right;background-color: #58CC02;"
+                                           class="btn w-50 text-white" value="Edit" id="firstFromBtn">
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                    <div class=" p-1 mt-5">
+                        <h3>Account Infomation</h3>
+                        <form id="secondForm" asp-action="EditPersonalInformation" asp-controller="Learners" onsubmit="return secondForm()">
+                            <input type="hidden" name="Idlearner" value="@Model.Idlearner" class="form-control">
+                            <input type="hidden" name="Email" value="@Model.Email" class="form-control">
+                            <input type="hidden" id="Password" value="@Model.Password" class="form-control">
+                            <input type="hidden" name="Joindate" value="@Model.Joindate" class="form-control">
+                            <input type="hidden" name="Image" value="@Model.Image" class="form-control">
+                            <input type="hidden" name="Sex" value="@Model.Sex" class="form-control">
+                            <input type="hidden" name="Dateofbirth" value="@Model.Dateofbirth" class="form-control">
+                            <input type="hidden" name="Fullname" value="@Model.Fullname" class="form-control">
+                            <input type="hidden" name="action" value="info" class="form-control">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-md-3 col-sm-12">
+                                            Current Password
+                                        </div>
+                                        <div class="col-md-9 col-sm-12">
+                                            <input type="text" id="currentPassword" class="form-control" onchange="ChangeTyped()">
+                                            <span id="checkCurrentPassword" class="text-danger"></span>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 col-sm-12 mt-2">
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-md-3 col-sm-12">
+                                            New Password
+                                        </div>
+                                        <div class="col-md-9 col-sm-12">
+                                            <input type="text" name="Password" id="newPassword" class="form-control">
+                                            <span id="checkNewPassword" class="text-danger"></span>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row mt-2">
+                                <div class="col-md-9 col-sm-12">
+                                    <div class="row d-flex align-items-center">
+
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-12 ">
+                                    <input type="submit" style="float: right;background-color: #58CC02;"
+                                           class="btn w-50 text-white" value="Edit" id="secondFromBtn">
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <script>
+
+
+        function toggleDiv(div) {
+
+            if (div.style.display == "none") {
+                div.style.display = "block";
+            } else {
+                div.style.display = "none";
+            }
+        }
+
+
+        //Edit profile
+        const editProfileBtn = document.getElementById("editProfileBtn");
+        const editProfileForm = document.getElementById("editProfileForm");
+
+        editProfileBtn.addEventListener("click", function () {
+            toggleDiv(editProfileForm);
+        });
+
+    </script>
+    <script>
+        const formChangeImage = document.getElementById("formChangeImage");
+        const changeImage = document.getElementById("changeImage");
+
+        changeImage.addEventListener("change", function () {
+            let tim;
+            tim = setTimeout(function () {
+
+                console.log("successful...");
+            }, 500);
+            clearTimeout(tim);
+            formChangeImage.submit();
+
+        })
+
+        const checkFullname = document.getElementById("checkFullname");
+        const checkCurrentPassword = document.getElementById("checkCurrentPassword");
+        const checkNewPassword = document.getElementById("checkNewPassword");
+
+        const firstFromBtn = document.getElementById("firstFromBtn");
+        const secondFromBtn = document.getElementById("secondFromBtn");
+
+        const firstForm = function () {
+            const Fullname = document.getElementById("Fullname").value;
+
+            let issubmit = false;
+            if (Fullname.length == 0) {
+                checkFullname.innerText = "Please enter your name!";
+
+            } else {
+                issubmit = true;
+            }
+            return issubmit;
+        };
+        const secondForm = function () {
+            let issubmit = false;
+            const CurrentPassword = document.getElementById("currentPassword").value;
+            const NewPassword = document.getElementById("newPassword").value;
+            const Password = document.getElementById("Password").value;
+            if (CurrentPassword.length < 8) {
+                checkCurrentPassword.innerText = "Please enter at least 8 characters!";
+            }
+            if (Password != CurrentPassword) {
+                checkCurrentPassword.innerText = "Invalid password!";
+            }
+            if (NewPassword.length < 8) {
+                checkNewPassword.innerText = "Please enter at least 8 characters!";
+            }
+            else {
+                issubmit = true;
+            }
+            return issubmit;
+        };
+        const ChangeTyped = function () {
+            const CurrentPassword = document.getElementById("currentPassword").value;
+            const Password = document.getElementById("Password").value;
+            if (Password != CurrentPassword) {
+                checkCurrentPassword.innerText = "Invalid password!";
+                checkCurrentPassword.style.color = "red";
+
+            }
+            if (Password != CurrentPassword) {
+                checkCurrentPassword.innerText = "Correct password!";
+                checkCurrentPassword.style.color = "green";
+            }
+        };
+    </script>
+    <script>
+        window.addEventListener('beforeunload', function () {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.indexOf('HienCaCookie=') === 0) {
+                    document.cookie = "hienca=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    break;
+                }
+            }
+        });
+
+    </script>
+
+    <script>
+
+        const myCookie = getCookie('HienCaCookie');
+        if (myCookie != null) {
+            document.getElementById("NoCookieName").style.display = "flex";
+        } else {
+            document.getElementById("HascookieName").style.display = "flex";
+
+        }
+
+        function getCookie(name) {
+            const cookieString = document.cookie;
+            const cookies = cookieString.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith(name + '=')) {
+                    return cookie.substring(name.length + 1);
+                }
+            }
+            return null;
+        }
+
+
+
+    </script>
+
+</body>
+
+</html>

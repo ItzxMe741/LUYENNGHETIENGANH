@@ -1,0 +1,59 @@
+﻿@model IEnumerable<LWEnglishPractice.Entities.History>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Score)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Finishtime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Finishdate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdlearnerNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdlessonNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Score)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Finishtime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Finishdate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdlearnerNavigation.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdlessonNavigation.Lessonanme)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

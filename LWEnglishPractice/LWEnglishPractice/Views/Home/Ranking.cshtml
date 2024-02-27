@@ -1,0 +1,377 @@
+﻿@model IEnumerable<LWEnglishPractice.Entities.History>
+@using LWEnglishPractice.Entities;
+@{
+    Layout = null;
+
+    History TopOne = TempData["TopOne"] as History;
+    History TopTwo = TempData["TopTwo"] as History;
+    History TopThree = TempData["TopThree"] as History;
+    List<History> OtherTops = TempData["OtherTops"] as List<History>;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listen And Write English</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="~/Style/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Style/ListenAndWrite.css">
+
+</head>
+
+
+<body>
+    <div class="row " style="width: 100vw; height: 100vh; background-image: url('https://leverageedublog.s3.ap-south-1.amazonaws.com/blog/wp-content/uploads/2019/11/23173331/Best-Books-for-GRE.png'); background-position: center; background-repeat: no-repeat; background-size: cover; ">
+        <div class="col-md-2  mt-5">
+            <h3 class="text-center logoCVG">CVG ENGLISH</h3>
+            <div class="">
+                <div id="homeBtn" class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
+
+                    <a href="/Home/Index" style="text-decoration: none;" class="text-dark">
+                        <span style="font-size:32px; margin-right: 10px;">
+                            <i style="color: #58CC02;"
+                               class="fa-solid fa-house "></i>
+                        </span> LEARNING
+                    </a>
+                </div>
+                <div id="homeBtn" class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
+
+                    <a href="/Home/Statistics" style="text-decoration: none;" class="text-dark">
+                        <span style="font-size:32px; margin-right: 10px;">
+                            <i style="color: #58CC02;"
+                               class="fa-solid fa-house "></i>
+                        </span> STATISTICS
+                    </a>
+                </div>
+                <di id="rankingBtn" class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
+
+                    <a href="/Home/Ranking" style="text-decoration: none;" class="text-dark">
+                        <span style="font-size:32px; margin-right: 10px;">
+                            <i style="color: #58CC02;"
+                               class="fa-solid fa-ranking-star "></i>
+                        </span> RANKING
+
+                    </a>
+            </div>
+            <div id="profileBtn" class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
+
+                <a href="/Home/Profile" style="text-decoration: none;" class="text-dark">
+                    <span style="font-size:32px; margin-right: 20px;">
+                        <i style="color: #58CC02;"
+                           class="fa-solid fa-user "></i>
+                    </span> PROIFILE
+                </a>
+            </div>
+            
+            <div class=" align-items-center rounded-3 sidebar p-4 pt-0 pb-0" id="NoCookieName" style="display:none">
+
+                <a href="/Login/Logout" style="text-decoration: none;" class="text-dark">
+                    <span style="font-size:32px; margin-right: 20px;">
+
+                        <i style="color: red;" class="fa-solid fa-power-off"></i>
+                    </span> LOG OUT
+                </a>
+            </div>
+            <div class=" align-items-center rounded-3 sidebar p-4 pt-0 pb-0" id="HascookieName" style="display:none">
+
+                <a href="/Login/Login" style="text-decoration: none;" class="text-dark">
+                    <span style="font-size:32px; margin-right: 20px;">
+
+                        <i style="color: #58CC02;" class="fa-solid fa-user-plus"></i>
+                    </span> LOG IN
+                </a>
+            </div>
+
+        </div>
+        <div class="col-md-10" style="max-height: 100vh; overflow-y:scroll; border-left: 1px solid #ccc;">
+
+            <div id="ranking" class="fade">
+                <div class="container">
+                    <div class="text-center mt-2 mb-2">
+                        @*<img src="~/Images/medal.jpg" alt="goldMedal" style="width:15%;">*@
+                        <h3 style="font-size:30px">LEARNING LEADERBOARD</h3>
+                    </div>
+                    <div class="row text-center" style="font-size:30px">
+                        <div class="col-md-3">RANK</div>
+                        <div class="col-md-2">SCORES</div>
+                        <div class="col-md-4">NAME</div>
+                        <div class="col-md-3">AVATAR</div>
+                    </div>
+                    @if (TopOne != null)
+                    {
+                        <div class="row text-center align-items-center mt-3 rounded"
+                             style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; border: 2px solid #F2B724; background-color:#fff">
+                            <div class="col-md-3">
+                                <img src="~/Images/goldMedal.jpg" alt="goldMedal" style="width:50%;">
+
+                            </div>
+                            <div class="col-md-2" style="font-size:40px">
+                                @TopOne.Score
+                            </div>
+                            <div class="col-md-4" style="font-size:30px">
+                                @TopOne.IdlearnerNavigation.Fullname
+                            </div>
+                            <div class="col-md-3">
+                                <img src="~/Images/@TopOne.IdlearnerNavigation.Image" alt="goldMedal" style="width:50%;">
+                            </div>
+                        </div>
+                    }
+                    @if (TopTwo != null)
+                    {
+                        <div class="row text-center align-items-center mt-3 rounded"
+                             style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; border: 2px solid #A0A2A3; background-color: #fff">
+                            <div class="col-md-3">
+
+                                <img src="~/Images/silverMedal.jpg" alt="goldMedal" style="width:50%;">
+
+                            </div>
+                            <div class="col-md-2" style="font-size:40px">
+                                @TopTwo.Score
+                            </div>
+                            <div class="col-md-4" style="font-size:30px">
+                                @TopTwo.IdlearnerNavigation.Fullname
+                            </div>
+                            <div class="col-md-3">
+                                <img src="~/Images/@TopTwo.IdlearnerNavigation.Image" alt="goldMedal" style="width:50%;">
+                            </div>
+                        </div>
+                    }
+                    @if (TopThree != null)
+                    {
+                        <div class="row text-center align-items-center mt-3 rounded"
+                             style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; border: 2px solid #CC885C; background-color: #fff">
+                            <div class="col-md-3">
+
+                                <img src="~/Images/bronzeMedal.jpg" alt="goldMedal" style="width:50%;">
+
+                            </div>
+                            <div class="col-md-2" style="font-size:40px">
+                                @TopThree.Score
+                            </div>
+                            <div class="col-md-4" style="font-size:30px">
+                                @TopThree.IdlearnerNavigation.Fullname
+                            </div>
+
+                            <div class="col-md-3">
+                                <img src="~/Images/@TopThree.IdlearnerNavigation.Image" alt="goldMedal" style="width:50%;">
+                            </div>
+
+                        </div>
+                    }
+                    @if (OtherTops != null)
+                    {
+                        int count = 4;
+                        <div class="p-2" style="max-height: 40vh;overflow-y: scroll;">
+                            @foreach (var item in OtherTops)
+                            {
+                                <div class="row text-center align-items-center mt-4 rounded"
+                                     style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; max-height: 40vh; overflow-y: scroll; background-color: #fff">
+                                    <div class="col-md-3" style="font-size:24px">
+                                        @count
+
+                                    </div>
+                                    <div class="col-md-2" style="font-size:40px">
+                                        @item.Score
+                                    </div>
+                                    <div class="col-md-4 " style="font-size:30px">
+                                        @item.IdlearnerNavigation.Fullname
+                                    </div>
+
+
+                                    @if (@item.IdlearnerNavigation.Image != null)
+                                    {
+                                        <div class="col-md-3">
+                                            <img src="~/Images/@item.IdlearnerNavigation.Image" alt="goldMedal" style="width:50%;">
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-3">
+                                            <img src="~/Images/logo.jpg" alt="goldMedal" style="width:50%;">
+                                        </div>
+                                    }
+                                </div>
+                                count++;
+                            }
+
+                        </div>
+                    }
+
+
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <script>
+        //Navigation
+        const homeBtn = document.getElementById("homeBtn");
+        const rankingBtn = document.getElementById("rankingBtn");
+        const learningBtn = document.getElementById("learningBtn");
+        const profileBtn = document.getElementById("profileBtn");
+        const home = document.getElementById("home");
+        const ranking = document.getElementById("ranking");
+        const learning = document.getElementById("learning");
+        const profile = document.getElementById("profile");
+
+        window.addEventListener("load", function () {
+            homeBtn.style.display = "block";
+            homeBtn.style.backgroundColor = "#DDF4FF";
+            homeBtn.style.border = "2px solid #84D8FF";
+
+            rankingBtn.style.backgroundColor = "";
+            rankingBtn.style.border = "none";
+
+            learningBtn.style.backgroundColor = "";
+            learningBtn.style.border = "none";
+
+            profileBtn.style.backgroundColor = "";
+            profileBtn.style.border = "none";
+
+            ranking.style.display = "none";
+            learning.style.display = "none";
+            profile.style.display = "none";
+        })
+        homeBtn.addEventListener("click", function () {
+            home.style.display = "block";
+            homeBtn.style.backgroundColor = "#DDF4FF";
+            homeBtn.style.border = "2px solid #84D8FF";
+
+            rankingBtn.style.backgroundColor = "";
+            rankingBtn.style.border = "none";
+
+            learningBtn.style.backgroundColor = "";
+            learningBtn.style.border = "none";
+
+            profileBtn.style.backgroundColor = "";
+            profileBtn.style.border = "none";
+
+            ranking.style.display = "none";
+            learning.style.display = "none";
+            profile.style.display = "none";
+        });
+        rankingBtn.addEventListener("click", function () {
+            ranking.style.display = "block";
+            rankingBtn.style.backgroundColor = "#DDF4FF";
+            rankingBtn.style.border = "2px solid #84D8FF";
+
+            homeBtn.style.backgroundColor = "";
+            homeBtn.style.border = "none";
+
+            learningBtn.style.backgroundColor = "";
+            learningBtn.style.border = "none";
+
+            profileBtn.style.backgroundColor = "";
+            profileBtn.style.border = "none";
+
+            home.style.display = "none";
+            learning.style.display = "none";
+            profile.style.display = "none";
+        });
+        learningBtn.addEventListener("click", function () {
+            learning.style.display = "block";
+            learningBtn.style.backgroundColor = "#DDF4FF";
+            learningBtn.style.border = "2px solid #84D8FF";
+
+            rankingBtn.style.backgroundColor = "";
+            rankingBtn.style.border = "none";
+
+            homeBtn.style.backgroundColor = "";
+            homeBtn.style.border = "none";
+
+            profileBtn.style.backgroundColor = "";
+            profileBtn.style.border = "none";
+
+            home.style.display = "none";
+            ranking.style.display = "none";
+            profile.style.display = "none";
+        });
+        profileBtn.addEventListener("click", function () {
+            profile.style.display = "block";
+            profileBtn.style.backgroundColor = "#DDF4FF";
+            profileBtn.style.border = "2px solid #84D8FF";
+
+            rankingBtn.style.backgroundColor = "";
+            rankingBtn.style.border = "none";
+
+            learningBtn.style.backgroundColor = "";
+            learningBtn.style.border = "none";
+
+            homeBtn.style.backgroundColor = "";
+            homeBtn.style.border = "none";
+
+            home.style.display = "none";
+            ranking.style.display = "none";
+            learning.style.display = "none";
+        });
+
+
+
+
+
+
+
+        //Edit profile
+        const editProfileBtn = document.getElementById("editProfileBtn");
+        const editProfileForm = document.getElementById("editProfileForm");
+
+        editProfileBtn.addEventListener("click", function () {
+            toggleDiv(editProfileForm);
+        });
+
+    </script>
+    <script>
+        window.addEventListener('beforeunload', function () {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.indexOf('HienCaCookie=') === 0) {
+                    document.cookie = "hienca=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    break;
+                }
+            }
+        });
+
+    </script>
+
+    <script>
+
+        const myCookie = getCookie('HienCaCookie');
+        if (myCookie != null) {
+            document.getElementById("NoCookieName").style.display = "flex";
+        } else {
+            document.getElementById("HascookieName").style.display = "flex";
+
+        }
+
+        function getCookie(name) {
+            const cookieString = document.cookie;
+            const cookies = cookieString.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith(name + '=')) {
+                    return cookie.substring(name.length + 1);
+                }
+            }
+            return null;
+        }
+
+
+
+    </script>
+
+</body>
+
+</html>

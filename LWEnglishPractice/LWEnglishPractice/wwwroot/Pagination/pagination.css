@@ -1,0 +1,21 @@
+﻿
+.listPage {
+    padding: 5px;
+    text-align: center;
+    list-style: none;
+}
+
+    .listPage li {
+        background-color: #ffffffBD;
+        padding: 10px 20px;
+        display: inline-block;
+        margin: 0px;
+        cursor: pointer;
+        border-color: rgb(0, 28, 64);
+    }
+
+    .listPage .active {
+        background-color: rgb(0, 28, 64);
+        border: 2px solid rgb(0, 28, 64);
+        color: #fff;
+    }

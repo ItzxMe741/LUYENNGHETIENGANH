@@ -1,0 +1,354 @@
+﻿@model IEnumerable<LWEnglishPractice.Entities.Track>
+@using LWEnglishPractice.Entities;
+@{
+    ListenAndWriteContext context = new ListenAndWriteContext();
+    List<Lesson> lesson = context.Lesson.Where(a => a.Active == 1).ToList();
+}
+<style>
+    audio::-webkit-media-controls-play-button {
+        display: block;
+    }
+</style>
+<div class="">
+
+    <form asp-action="CreateOrEdit" asp-controller="Tracks" method="post" onsubmit="return onSubmitForm()" enctype="multipart/form-data">
+        <input id="action" type="hidden" name="action" />
+        <input id="Idtrack" type="hidden" name="Idtrack" />
+        <div class="bg-light p-1 border border-secondary rounded">
+            <h2>Tracks Management</h2>
+
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <div class="row d-flex align-items-center">
+                        <div class="col-md-2 col-sm-12">
+                            Lesson
+                        </div>
+                        <div class="col-md-10 col-sm-12">
+                            <select id="multipleSelect" name="Idlesson" class="Idlesson" data-search="true"
+                                    data-silent-initial-value-set="true">
+                                @foreach (var item in lesson)
+                                {
+                                    <option value="@item.Idlesson">@item.Lessonanme</option>
+                                }
+
+                            </select>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="row d-flex align-items-center">
+                        <div class="col-md-2 col-sm-12">
+                            Track Name
+                        </div>
+                        <div class="col-md-10 col-sm-12">
+                            <input name="Trackname" id="Trackname" maxlength="255"  onfocus="this.value=''"  type="number" class="form-control"/>
+                            <span id="checkTrackname" class="text-danger"></span>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-6 col-sm-12">
+                    <div class="row d-flex align-items-center">
+
+                        <div class="col-md-2 col-sm-12">
+                            Audio
+                        </div>
+                        <div class="col-md-10 col-sm-12">
+                            <audio controls class="w-100 p-2" id="audio">
+                                <source id="ShowSource" src="#" class=" " asp-append-version="true" />
+                            </audio>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="row d-flex align-items-center">
+                        <div class="col-md-2 col-sm-12">
+                            Describe
+                        </div>
+                        <div class="col-md-10 col-sm-12">
+                            <textarea name="Describe" id="Describe"  type="text" style="height:14px" class="form-control"></textarea>
+                            <span id="checkDescribe" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-sm-12">
+                    <div class="row d-flex align-items-center">
+
+                        <div class="col-md-3 col-sm-12">
+                            Source
+                        </div>
+                        <div class="col-md-9 col-sm-12">
+                            <input name="Source" id="Source" type='file' class="form-control" />
+
+                            <span id="checkSource" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-12 ">
+                    <div class="row d-flex align-items-center">
+
+                        <div class="col-md-4 col-sm-12">
+                            Duration(s)
+                        </div>
+                        <div class="col-md-8 col-sm-12">
+                            <input name="Duration" id="Duration" onfocus="this.value=''"  maxlength="255" type="text" class="form-control">
+                           
+                            <span id="checkDuration" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12">
+                    <div class="row d-flex align-items-center">
+
+
+                        <div class="col-md-4 col-sm-12">
+                            Date Upload
+                        </div>
+                        <div class="col-md-8 col-sm-12">
+                            <input type="date" id="Dateupload" disabled name="Dateupload" maxlength="255"
+                                   class="form-control">
+                            <span class="text-danger"></span>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-12 ">
+                    <button type="submit" style="float: right;" class="btn btn-primary w-100" id="btnAdd">Thêm</button>
+                    <div class="d-flex">
+                        <button type="button" style="display:none;" class="btn btn-light w-50" id="btnCancel">Hủy</button>
+                        <button type="submit" class="btn btn-primary w-50" onclick="onEdit()" id="btnUpdate" style="display:none; float: right;">
+                            Cập
+                            nhật
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+<div class="x_content">
+    <div class="row">
+        <div class="col-sm-12" style="height:60vh;overflow-y:scroll">
+            <div class="card-box table-responsive">
+
+
+                <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap"
+                       cellspacing="0" width="100%">
+                    <thead>
+                        <tr class="text-center">
+                            <th>Lesson Name</th>
+                            <th>Track Name</th>
+                            <th>Describe</th>
+                            <th>Source</th>
+                            <th>Duration</th>
+                            <th>Date Upload</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="d-none">
+                            <td>.</td>
+                            <td>.</td>
+                            <td>.</td>
+                            <td>.</td>
+
+                        </tr>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.IdlessonNavigation.Lessonanme</td>
+                                <td>@item.Trackname</td>
+                                <td>@item.Describe</td>
+                                <td style="width:200px">
+
+                                    <audio controls class="w-100 p-2">
+                                        <source id="SourceEdit" src="~/Images/@item.Source" class=" " asp-append-version="true" />
+                                    </audio>
+                                </td>
+                                @{
+                                    string minutes = (@item.Duration / 60)+"m"; // minute
+                                    string remainingSeconds = (@item.Duration % 60)+"s"; //second
+                                }
+                                <td class="text-center">@minutes : @remainingSeconds</td>
+                                <td>@item.Duration</td>
+                                @if (item.Dateupload != null)
+                                {
+                                    DateTime Dateupload = (DateTime)item.Dateupload;
+                                    <td>@Dateupload.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)</td>
+                                    <td class="d-none">@Dateupload.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture)</td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                    <td></td>
+                                }
+                                <td class="d-none">@item.Idlesson</td>
+                                <td class="d-none">@item.Idtrack</td>
+
+
+                                <td class="table-td-center d-flex">
+                                    <a class="btn  btn-sm btn-warning " onclick="onEdit(this)"><i class="fas fa-edit text-white"></i></a>
+                                    <form class="formDelete" asp-action="Delete" asp-route-id="@item.Idtrack" asp-controller="Tracks">
+                                        <button type="submit" class="btn  btn-sm btn-danger "><i class="fas fa-trash text-white"></i></button>
+                                    </form>
+
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    let deleteBtns = document.querySelectorAll('.formDelete');
+    deleteBtns.forEach(function (deleteBtn) {
+        deleteBtn.addEventListener('submit', function (e) {
+
+            var form = this;
+
+            e.preventDefault();
+
+            swal({
+                title: 'Bạn có chắc chắn muốn xóa?',
+
+                icon: 'warning',
+                buttons: ['Hủy bỏ!', 'Xác nhận'],
+                dangerMode: true,
+            }).then(function (isConfirm) {
+                if (isConfirm) {
+
+                    form.submit();
+                    swal({
+                        title: 'Đã xóa!',
+                        icon: 'success',
+                        timer: 1500,
+                        button: false,
+                    });
+
+                } else {
+                    swal({
+                        title: 'Đã hủy!',
+                        button: false,
+                        icon: 'error',
+                        timer: 500,
+                    });
+                }
+            });
+        });
+    })
+
+
+
+    function onSubmitForm() {
+        let isSubmit = false;
+        let checkDescribe = document.getElementById("checkDescribe");
+        let checkTrackname = document.getElementById("checkTrackname");
+        let checkDuration = document.getElementById("checkDuration");
+        let checkSource = document.getElementById("checkSource");
+        let Trackname = document.getElementById("Trackname").value;
+        let Describe = document.getElementById("Describe").value;
+        let Source = document.getElementById("Source").value;
+        let Duration = document.getElementById("Duration").value;
+
+        let errorMessage = "Vui lòng cung cấp thông tin!";
+
+        if (Duration.length == 0 && Duration <= 0) {
+            checkDuration.innerText = errorMessage;
+
+        }
+        if (Source.length == 0) {
+            checkSource.innerText = errorMessage;
+
+        }
+        if (Describe.length == 0) {
+            checkDescribe.innerText = errorMessage;
+
+        }
+        if (Trackname.length == 0) {
+            checkTrackname.innerText = errorMessage;
+
+        }
+        else {
+            isSubmit = true;
+        }
+        return isSubmit;
+    }
+
+
+    let btnAdd = document.getElementById("btnAdd");
+    let btnUpdate = document.getElementById("btnUpdate");
+    let btnCancel = document.getElementById("btnCancel");
+    let action = document.getElementById("action");
+
+    btnCancel.addEventListener("click", function () {
+        btnUpdate.style.display = "none";
+        btnCancel.style.display = "none";
+        btnAdd.style.display = "block";
+        document.getElementById("Dateupload").disabled = true;
+    })
+
+
+    btnAdd.addEventListener("click", function () {
+        action.value = "addItem";
+    })
+    btnUpdate.addEventListener("click", function () {
+        action.value = "editItem";
+
+    })
+
+
+    
+</script>
+<script>
+    const audioInput = document.getElementById('Source');
+    const audioSource = document.getElementById('ShowSource');
+    const audio = document.getElementById('audio');
+    let timeout;
+    audioInput.addEventListener('change', function () {
+        const file = this.files[0];
+        const objectURL = URL.createObjectURL(file);
+        audioSource.src = objectURL;
+        audio.load();
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            document.getElementById("Duration").value = Math.round(document.getElementById('audio').duration);
+
+        }, 500);
+    });
+
+</script>
+<script src="~/Js/AudioList.js"></script>
+@*<script>
+        const Dateupload = document.getElementById('Dateupload');
+
+        window.addEventListener("load", function () {
+            const currentDate = new Date();
+            const year = currentDate.getFullYear();
+            const month = ("0" + (currentDate.getMonth() + 1)).slice(-2);
+            const day = ("0" + currentDate.getDate()).slice(-2);
+            const formattedDate = year + "-" + month + "-" + day;
+            Dateupload.value = formattedDate;
+        })
+    </script>*@

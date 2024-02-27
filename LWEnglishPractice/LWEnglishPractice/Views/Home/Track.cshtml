@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listen And Write English</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="~/Style/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Style/Login.css">
+    <link rel="stylesheet" href="~/Style/ListenAndWrite.css">
+
+</head>
+
+
+<body>
+    <div class="row " style="width: 100vw; height: 100vh;">
+        <div class="col-md-2">
+            <h3 class="mt-5 logoCVG">CVG ENGLISH</h3>
+            <div class="">
+                <div class="">
+                    <div id="homeBtn" class="d-flex align-items-center rounded-3 sidebar p-5 pt-0 pb-0" style="background-color: #DDF4FF;border: 2px solid #84D8FF;">
+                        <span style="font-size:32px; margin-right: 10px;">
+                            <i style="color: #58CC02;"
+                               class="fa-solid fa-house "></i>
+                        </span>
+                        <a href="/Home/Index" style="text-decoration: none;" class="text-dark">LEARNING</a>
+                    </div>
+
+                    <di id="rankingBtn" class="d-flex align-items-center rounded-3 sidebar p-5 pt-0 pb-0">
+                        <span style="font-size:32px; margin-right: 10px;">
+                            <i style="color: #58CC02;"
+                               class="fa-solid fa-ranking-star "></i>
+                        </span>
+                        <a href="/Home/Ranking" style="text-decoration: none;" class="text-dark">RANKING</a>
+                </div>
+                <div id="profileBtn" class="d-flex align-items-center rounded-3 sidebar p-5 pt-0 pb-0">
+                    <span style="font-size:32px; margin-right: 20px;">
+                        <i style="color: #58CC02;"
+                           class="fa-solid fa-user "></i>
+                    </span>
+                    <a href="/Home/Profile" style="text-decoration: none;" class="text-dark">PROFILE</a>
+                </div>
+                <div class="d-flex align-items-center rounded-3 sidebar p-5 pt-0 pb-0">
+
+                    <a href="/Login/Logout" style="text-decoration: none;" class="text-dark">
+                        <span style="font-size:32px; margin-right: 20px;">
+
+                            <i style="color: #58CC02;" class="fa-solid fa-power-off"></i>
+                        </span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-10 " style="max-height: 100vh; overflow-y:scroll; border-left: 1px solid #ccc;">
+            <div class="mt-4 "></div>
+            <div class="row">
+                <div id="" class="mt-4 col-md-6">
+
+                    <div class="p-3 text-white  m-auto" style="background-color: #58CC02; border-radius: 10px;">
+                        <h5>T 1</h5>
+                        <p>Nice to meet you!</p>
+                    </div>
+                </div>
+                <div id="" class="mt-4 col-md-6">
+
+                    <div class="p-3 text-white  m-auto" style="background-color: #58CC02; border-radius: 10px;">
+                        <h5>LESSON 1</h5>
+                        <p>Nice to meet you!</p>
+                    </div>
+                </div>
+                <div id="" class="mt-4 col-md-6">
+
+                    <div class="p-3 text-white m-auto" style="background-color: #58CC02; border-radius: 10px;">
+                        <h5>LESSON 1</h5>
+                        <p>Nice to meet you!</p>
+                    </div>
+                </div>
+                <div id="" class="mt-4 col-md-6">
+
+                    <div class="p-3 text-white m-auto" style="background-color: #58CC02; border-radius: 10px;">
+                        <h5>LESSON 1</h5>
+                        <p>Nice to meet you!</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <script>
+        //Navigation
+        const homeBtn = document.getElementById("homeBtn");
+        const rankingBtn = document.getElementById("rankingBtn");
+        const learningBtn = document.getElementById("learningBtn");
+        const profileBtn = document.getElementById("profileBtn");
+        const home = document.getElementById("home");
+        const ranking = document.getElementById("ranking");
+        const learning = document.getElementById("learning");
+        const profile = document.getElementById("profile");
+
+
+
+
+    </script>
+    <script>
+        window.addEventListener('beforeunload', function () {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.indexOf('HienCaCookie=') === 0) {
+                    document.cookie = "hienca=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    break;
+                }
+            }
+        });
+
+    </script>
+</body>
+
+</html>

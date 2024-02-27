@@ -1,0 +1,1398 @@
+﻿@model LWEnglishPractice.Entities.Track;
+@using LWEnglishPractice.Entities;
+@{
+    Layout = null;
+    //ListenAndWriteContext context = new ListenAndWriteContext();
+    //List<Lesson> lesson = context.Lesson.Where(a => a.Active == 1).ToList();
+
+    List<Track> trackList = TempData["track"] as List<Track>;
+    Track track = TempData["LevelLesson"] as Track;
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listen And Write English</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="~/Style/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Style/ListenAndWrite.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+</head>
+
+
+<body>
+    @if (track != null)
+    {
+        <input type="hidden" value="@track.IdlessonNavigation.IdlevelNavigation.Level1" id="levelLesson" />
+
+    }
+    <div class="row " style="width: 100vw; height: 100vh; ">
+        <div class="col-md-2 border border-bottom-0 border-top-0 border-right text-center" style="background-image: url('https://leverageedublog.s3.ap-south-1.amazonaws.com/blog/wp-content/uploads/2019/11/23173331/Best-Books-for-GRE.png'); background-position: left; background-repeat: no-repeat; background-size: cover;">
+            <div class=" mt-5">
+                <h3 class="text-center logoCVG">CVG ENGLISH</h3>
+                <div class="">
+                    <div id="homeBtn" class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
+
+                        <a href="/Home/Index" style="text-decoration: none;" class="text-dark">
+                            <span style="font-size:32px; margin-right: 10px;">
+                                <i style="color: #58CC02;"
+                                   class="fa-solid fa-house "></i>
+                            </span> LEARNING
+                        </a>
+                    </div>
+                    <div id="homeBtn" class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
+
+                        <a href="/Home/Statistics" style="text-decoration: none;" class="text-dark">
+                            <span style="font-size:32px; margin-right: 10px;">
+                                <i style="color: #58CC02;"
+                                   class="fa-solid fa-house "></i>
+                            </span> STATISTICS
+                        </a>
+                    </div>
+                    <di id="rankingBtn" class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
+
+                        <a href="/Home/Ranking" style="text-decoration: none;" class="text-dark">
+                            <span style="font-size:32px; margin-right: 10px;">
+                                <i style="color: #58CC02;"
+                                   class="fa-solid fa-ranking-star "></i>
+                            </span> RANKING
+
+                        </a>
+                </div>
+                <div id="profileBtn" class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
+
+                    <a href="/Home/Profile" style="text-decoration: none;" class="text-dark">
+                        <span style="font-size:32px; margin-right: 20px;">
+                            <i style="color: #58CC02;"
+                               class="fa-solid fa-user "></i>
+                        </span> PROIFILE
+                    </a>
+                </div>
+                
+                <div class=" align-items-center rounded-3 sidebar p-4 pt-0 pb-0" id="NoCookieName" style="display:none">
+
+                    <a href="/Login/Logout" style="text-decoration: none;" class="text-dark">
+                        <span style="font-size:32px; margin-right: 20px;">
+
+                            <i style="color: red;" class="fa-solid fa-power-off"></i>
+                        </span> LOG OUT
+                    </a>
+                </div>
+                <div class=" align-items-center rounded-3 sidebar p-4 pt-0 pb-0" id="HascookieName" style="display:none">
+
+                    <a href="/Login/Login" style="text-decoration: none;" class="text-dark">
+                        <span style="font-size:32px; margin-right: 20px;">
+
+                            <i style="color: #58CC02;" class="fa-solid fa-user-plus"></i>
+                        </span> LOG IN
+                    </a>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-10 pb-5 border border-bottom-0 border-left-0 border-top-0 border-right"
+             style="max-height: 100vh; overflow-y:scroll">
+
+
+            <div id="learning" class="fade">
+                @if (Model != null)
+                {
+                    <div class="mt-4 row align-items-center">
+                        <div class="col-md-4 bg  text-white text-center rounded-circle"
+                             style="width: 80px; height: 80px; position: relative; margin-left: 75px;background-color: #58CC02;">
+                            <span style="position:absolute; left: 15px;top:25px">@Model.IdlessonNavigation.IdlevelNavigation.Levelname</span>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h2 class=" ml-2 text-center">
+                                        @Model.IdlessonNavigation.Lessonanme - Part <span id="partOfLesson"> </span>
+                                    </h2>
+
+                                </div>
+                                @*<div class="col-md-3">
+                                        <select id="TrackOptions" class=" form-select">
+                                            @foreach (var track in trackList)
+                                            {
+                                                <option value="@track.Idtrack">Part @track.Trackname</option>
+                                            }
+                                        </select>
+                                    </div>*@
+                                <form class="d-none" id="SearchTrackForm" asp-action="Learning" asp-controller="Home">
+                                    <input class="d-none" name="Idlesson" value="@Model.Idlesson" />
+                                    <input class="d-none" name="Idlevel" value="@Model.IdlessonNavigation.Idlevel" />
+                                    <input class="d-none" id="Idtrack" name="Idtrack" value="Idtrack" />
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center mt-5">
+                            <div class="">Speed:</div>
+                            @if (Model.IdlessonNavigation.IdlevelNavigation.Level1 == 1 || Model.IdlessonNavigation.IdlevelNavigation.Level1 == 2)
+                            {
+                                <div class="">
+                                    <select id="speedOption" class="w-100 form-select">
+                                        <option value="0.75">Chuẩn</option>
+                                        <option value="0.25">0.25</option>
+                                        <option value="0.5">0.5</option>
+                                        <option value="1">1</option>
+                                        <option value="1.25">1.25</option>
+                                        <option value="1.5">1.5</option>
+                                        <option value="1.75">1.75</option>
+                                        <option value="2">2</option>
+                                    </select>
+                                </div>
+                            }
+                            @if (Model.IdlessonNavigation.IdlevelNavigation.Level1 == 3)
+                            {
+                                <div class="">
+                                    <select id="speedOption" class="w-100 form-select">
+
+                                        <option value="1.25">Chuẩn</option>
+                                        <option value="1.5">1.5</option>
+                                        <option value="1.75">1.75</option>
+                                        <option value="2">2</option>
+                                    </select>
+                                </div>
+                            }
+
+
+                        </div>
+                        @*<div class="d-flex justify-content-between align-items-center mt-5">
+                                <div class="">Speech:</div>
+                                <div id="microBtn" class="mr-2">
+                                    <i class="fas fa-microphone" style="font-size: 24px"></i>
+                                </div>
+                                <div id="stopMicroBtn" class="">
+                                    <i class="fas fa-microphone-slash" style="font-size: 24px"></i>
+                                </div>
+                            </div>*@
+                        <div class="d-flex justify-content-between align-items-center mt-5">
+                            <div class="">Scores:</div>
+                            <div class="mr-2">
+                                <span id="scores" style="font-size: 24px">0</span>
+                            </div>
+
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-5">
+                            <form asp-action="CreateOrEdit" asp-controller="Histories">
+                                <input type="hidden" name="Idlesson" value="@Model.Idlesson" />
+                                <input type="hidden" name="Score" value="" id="Score" />
+                                <input type="hidden" name="Finishtime" value="" id="Finishtime" />
+                                <button type="submit" class="border-0 btn" disabled id="saveHistoryBtn"><i class="fas fa-save" style="font-size: 36px;"></i></button>
+                            </form>
+
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center mt-5">
+                            <div class="">Durations:</div>
+                            <div class="mr-2">
+                                <span id="sumDuration" style="font-size: 24px">0</span> s
+                            </div>
+
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center mt-5">
+                            <div class="">Times:</div>
+                            <div class="mr-2">
+                                <span id="timer" style="font-size: 24px">00:00:00</span>
+                            </div>
+
+                        </div>
+                        @*<div class="">
+                                Hint<span id="hintText" class="mr-2">0%</span>
+                            </div>*@
+                    </div>
+                    <div class="mt-2">
+                        @*//chart*@
+                        <canvas id="linechart" class="w-100" style="max-height: 50vh;"></canvas>
+                    </div>
+                    <div class="mt-2">
+                        @*@if (track.IdlessonNavigation.IdlevelNavigation.Level1 == 2 || track.IdlessonNavigation.IdlevelNavigation.Level1 == 3)
+                            {*@
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="row justify-content-center align-items-center">
+                                    <div class="col-md-2">
+                                        Wrong:
+                                    </div>
+                                    <div class="col-md-10">
+                                        <textarea type="text" disabled id="wrongWord" class="form-control text-danger"></textarea>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-9">
+                                <div class="row justify-content-center align-items-center">
+                                    <div class="col-md-1">
+                                        Right:
+                                    </div>
+                                    <div class="col-md-11">
+                                        <textarea type="text" disabled id="correctWord" class="form-control text-success"></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        @*}*@
+                        @if (track.IdlessonNavigation.IdlevelNavigation.Level1 == 1)
+                        {
+                            <p id="hint"></p>
+                        }
+                        <p id="audioText" style="display:none" class="bg bg-light boder rounded p-2 "></p>
+                        <audio controls loop id="myAudio" class="custom-controls w-100">
+                            @*<source id="Source" src="~/Images/1-1.mp3" type="audio/mpeg">*@
+                            <source id="mySource" src="" type="audio/mpeg">
+                        </audio>
+                        <div class="d-flex justify-content-around mt-2">
+                            <button id="listenBtn" class="btn text-white" style="background-color: #58CC02;">
+                                <span class="mr-2"><i class="fa-solid fa-circle-play"></i></span>
+                                Listen
+                            </button>
+                            <button id="pauseBtn" class="btn text-white" style="background-color: #58CC02; display:none">
+                                <span class="mr-2"><i class="fa-solid fa-pause"></i></span>
+                                Pause
+                            </button>
+                            <button id="hintVisibleBtn" class="btn text-white"
+                                    style="background-color: #58CC02;display: none">
+                                <span class="mr-2">
+                                    <i class="fa-solid fa-eye"></i>
+                                </span>Hint
+                            </button>
+                            <button id="hintHideBtn" class="btn text-white" style="background-color: #58CC02;">
+                                <span class="mr-2"><i class="fas fa-eye-slash"></i></span>Hint
+                            </button>
+
+                            <button id="retryBtn" disabled class="btn text-white" style="background-color: #58CC02;">
+                                <span class="mr-2"><i class="fa-solid fa-rotate-right"></i></span>
+                                Retry
+                            </button>
+                            <button id="backBtn" disabled class="btn text-white" style="background-color: #58CC02;">
+                                <span class="mr-2"><i class="fas fa-fast-backward"></i></span>
+                                Back
+                            </button>
+                            <button id="nextBtn" disabled class="btn text-white" style="background-color: #58CC02;">
+                                <span class="mr-2"><i class="fa-solid fa-forward-fast"></i></span>
+                                Next
+                            </button>
+                            <button id="restartBtn" disabled class="btn text-white" style="background-color: #58CC02;">
+                                <span class="mr-2"><i class="fa-solid fa-eraser"></i></span>
+                                Restart
+                            </button>
+
+                        </div>
+                    </div>
+                    <p class="mt-2">Listen and write the words you hear below</p>
+                    @*<div class="">Score: <span id="score" class="">0</span></div>*@
+                    <textarea disabled class="w-100 form-control" name="" id="inputText" cols="30" rows="2" style="min-height: 20px;"
+                              placeholder="Write it down here"></textarea>
+                }
+                else
+                {
+                    <div class="mt-4 row align-items-center">
+                        <div class="col-md-4 bg  text-white text-center rounded-circle"
+                             style="width: 80px; height: 80px; position: relative; margin-left: 75px;background-color: #58CC02;">
+                            <span style="position:absolute; left: 15px;top:25px"></span>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h2 class=" ml-2 text-center">
+                                        There are currently no tracks <span id=""> </span>
+                                    </h2>
+
+                                </div>
+                                @*<div class="col-md-3">
+                                        <select id="TrackOptions" class=" form-select">
+                                            @foreach (var track in trackList)
+                                            {
+                                                <option value="@track.Idtrack">Part @track.Trackname</option>
+                                            }
+                                        </select>
+                                    </div>*@
+                                <form class="d-none" id="" asp-action="Learning" asp-controller="Home">
+                                    <input class="d-none" name="" value="" />
+                                    <input class="d-none" name="" value="" />
+                                    <input class="d-none" id="" name="Idtrack" value="" />
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center mt-2">
+                            <div class="">Speed:</div>
+                            <div class="">
+                                <select id="" class="w-100 form-select">
+                                    <option value="1">Chuẩn</option>
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                    <option value="2">2</option>
+                                </select>
+                            </div>
+
+                        </div>
+                        @*<div class="d-flex justify-content-between align-items-center mt-2">
+                                <div class="">Speech:</div>
+                                <div id="" class="mr-2">
+                                    <i class="fas fa-microphone" style="font-size: 24px"></i>
+                                </div>
+                                <div id="" class="">
+                                    <i class="fas fa-microphone-slash" style="font-size: 24px"></i>
+                                </div>
+                            </div>*@
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <div class="">Scores:</div>
+                            <div class="mr-2">
+                                <span id="" style="font-size: 24px">0</span>
+                            </div>
+
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <form asp-action="CreateOrEdit" asp-controller="Histories">
+                                <input type="hidden" name="" value="" /> @*do not have track*@
+                                <input type="hidden" name="" value="" id="" />
+                                <input type="hidden" name="" value="" id="" />
+                                <button type="submit" class="border-0 btn" disabled id=""><i class="fas fa-save" style="font-size: 36px;"></i></button>
+                            </form>
+
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <div class="">Times:</div>
+                            <div class="mr-2">
+                                <span id="" style="font-size: 24px">00:00:00</span>
+                            </div>
+
+                        </div>
+                        @*<div class="">
+                                Hint<span id="hintText" class="mr-2">0%</span>
+                            </div>*@
+                    </div>
+                    <div class="mt-2">
+                        <p id="" class="bg bg-light boder rounded p-2"></p>
+                        <audio controls loop id="" class="custom-controls w-100">
+                            <source id="mySource" src="" type="audio/mpeg">
+                        </audio>
+                        <div class="d-flex  justify-content-around mt-2">
+                            <button disabled id="" class="btn text-white" style="background-color: #58CC02;">
+                                <span class="mr-2"><i class="fa-solid fa-circle-play"></i></span>
+                                Listen
+                            </button>
+                            <button id="" disabled class="btn text-white" style="background-color: #58CC02; display:none">
+                                <span class="mr-2"><i class="fa-solid fa-pause"></i></span>
+                                Pause
+                            </button>
+                            <button disabled id="" class="btn text-white"
+                                    style="background-color: #58CC02;display: none">
+                                <span class="mr-2">
+                                    <i class="fa-solid fa-eye"></i>
+                                </span>Hint
+                            </button>
+                            <button id="" disabled class="btn text-white" style="background-color: #58CC02;">
+                                <span class="mr-2"><i class="fas fa-eye-slash"></i></span>Hint
+                            </button>
+
+                            <button id="" disabled class="btn text-white" style="background-color: #58CC02;">
+                                <span class="mr-2"><i class="fa-solid fa-rotate-right"></i></span>
+                                Retry
+                            </button>
+                            <button id="" disabled class="btn text-white" style="background-color: #58CC02;">
+                                <span class="mr-2"><i class="fas fa-fast-backward"></i></span>
+                                Back
+                            </button>
+                            <button id="" disabled class="btn text-white" style="background-color: #58CC02;">
+                                <span class="mr-2"><i class="fa-solid fa-forward-fast"></i></span>
+                                Next
+                            </button>
+                            <button id="" disabled class="btn text-white" style="background-color: #58CC02;">
+                                <span class="mr-2"><i class="fa-solid fa-eraser"></i></span>
+                                Restart
+                            </button>
+
+                        </div>
+                    </div>
+                    <p class="mt-2">Listen and write the words you hear below</p>
+                    @*<div class="">Score: <span id="score" class="">0</span></div>*@
+                    <textarea disabled class="w-100 form-control" name="" id="" cols="30" rows="2" style="min-height: 20px;"
+                              placeholder="Write it down here"></textarea>
+                }
+
+            </div>
+
+
+
+        </div>
+        @*<div class="col-md-3 mt-5" style="max-height: 100vh; overflow-y:scroll">
+                <h3 class="text-center">RELATED AUDIOS</h3>
+                <div class="row ">
+                    <div class="col-md-8 text-center">
+                        TRACK NAME
+                    </div>
+
+                    <div class="col-md-2">
+                        TIME
+                    </div>
+
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-8 ">
+                        <a href="">
+                            Track 2: What is your name?
+                        </a>
+
+                    </div>
+
+                    <div class="col-md-2 text-center">
+                        6
+                    </div>
+
+                </div>
+
+            </div>*@
+    </div>
+
+    @*<script src="~/Js/AudioList.js"></script>*@
+    <script>
+
+
+
+
+    </script>
+    <script>
+
+
+
+        //display timer
+        let seconds = 0;
+        let minutes = 0;
+        let hours = 0;
+        let count = 0;
+        let timerId;
+        let stopped = false;
+
+        let timerDisplay = "00:00:00";
+        //function startTimer() {
+        //    timerId = setInterval(function () {
+        //        count++;
+
+        //            seconds++;
+        //            if (seconds >= 60) {
+        //                seconds = 0;
+        //                minutes++;
+        //                if (minutes >= 60) {
+        //                    minutes = 0;
+        //                    hours++;
+        //                }
+        //            }
+        //             timerDisplay = (hours < 10 ? "0" + hours : hours) + ":" +
+        //                (minutes < 10 ? "0" + minutes : minutes) + ":" +
+        //                (seconds < 10 ? "0" + seconds : seconds);
+        //            document.getElementById("timer").innerText = timerDisplay;
+
+        //        //if (stopped) {
+        //        //    clearInterval(timerId);
+        //        //}
+
+        //    }, 1000);
+        //}
+        let counter = 0;
+        let intervalId = null;
+        function startStopTimer() {
+            if (intervalId) {
+                clearInterval(intervalId);
+                intervalId = null;
+                counter = 0;
+                //document.getElementById('start-stop-button').textContent = 'Start';
+            } else {
+                intervalId = setInterval(function () {
+
+                    counter++;
+                    seconds++;
+                    if (seconds >= 60) {
+                        seconds = 0;
+                        minutes++;
+                        if (minutes >= 60) {
+                            minutes = 0;
+                            hours++;
+                        }
+                    }
+                    timerDisplay = (hours < 10 ? "0" + hours : hours) + ":" +
+                        (minutes < 10 ? "0" + minutes : minutes) + ":" +
+                        (seconds < 10 ? "0" + seconds : seconds);
+                    document.getElementById('timer').innerText = timerDisplay;
+                }, 1000);
+                //document.getElementById('start-stop-button').textContent = 'Stop';
+            }
+        }
+        //button and input
+        const listenBtn = document.getElementById("listenBtn");
+        const pauseBtn = document.getElementById("pauseBtn");
+        const audioSource = document.getElementById("myAudio");
+        const retryBtn = document.getElementById("retryBtn");
+        const nextBtn = document.getElementById("nextBtn");
+        const restartBtn = document.getElementById("restartBtn");
+        const speedOption = document.getElementById("speedOption");
+        const inputFocus = document.getElementById("inputText");
+        let audioText = document.getElementById("audioText");
+
+        //load sourceList
+        let myArr =@Html.Raw(ViewBag.CookieValue);
+        const trackList = myArr.map(obj => obj[Object.keys(obj)[2]]);
+        const IdtrackList = myArr.map(obj => obj[Object.keys(obj)[0]]);
+        const TracknameList = myArr.map(obj => obj[Object.keys(obj)[1]]);
+        const DatecreateList = myArr.map(obj => obj[Object.keys(obj)[3]]);
+        const DurationList = myArr.map(obj => obj[Object.keys(obj)[4]]);
+        const DescribeList = myArr.map(obj => obj[Object.keys(obj)[5]]);
+
+        let audio = document.getElementById("myAudio");
+
+        let source = document.getElementById("mySource");
+        let partOfLesson = document.getElementById("partOfLesson");
+
+        let currenSourceIndex = 0;
+        let chartLessonScore = [];
+        let resetChart = true;
+        //result
+        let x;//tổng thời gian nghe;
+        let y;// thời gian của audio;
+        let scores = 0;
+        let scoreCurrent = document.getElementById("scores");
+        function playNextMusic() {
+
+            currenSourceIndex++;
+
+            if (currenSourceIndex >= trackList.length) {
+
+
+                /*clearInterval(timerId);*/
+                x = counter/60;
+                y = (DurationList.reduce((total, currentValue) => total + currentValue))/60;
+                console.log("x"+x);
+                console.log("y"+y);
+                scores = 10 * (11 - x / y);
+                startStopTimer();
+
+                // draw score chart
+
+                chartLessonScore.push(Math.round(scores));
+                //Count_Audio_Pause = 0;
+                //Count_Audio_End = 0;
+                //Count_Audio_Hint = 0;
+                //Count_Audio_Retry = 0;
+
+                line_chart.destroy();
+                createChart();
+                //console.log("scores :" + scores)
+                //end draw
+                document.getElementById('inputText').disabled = true;
+                //save history into database
+                document.getElementById("Score").value = Math.round(scores);
+                document.getElementById("Finishtime").value = x;
+                document.getElementById("saveHistoryBtn").disabled = false;
+                document.getElementById("saveHistoryBtn").style.color = "#58CC02";
+                //show client browser
+                scoreCurrent.innerText = Math.round(scores);
+
+
+                audioText.innerText = "Finish!";
+                document.getElementById("partOfLesson").innerText = TracknameList[trackList.length - 1];
+                listenBtn.disabled = true;
+                pauseBtn.disabled = true;
+                retryBtn.disabled = true;
+                backBtn.disabled = true;
+                restartBtn.disabled = false;
+                inputFocus.disabled = true;
+
+                source.src = "/Images/" + trackList[0];
+
+            }
+
+            if(currenSourceIndex == trackList.length - 1) {
+                nextBtn.disabled = true;
+                listenBtn.disabled = true;
+
+                console.log("currenSourceIndex" + currenSourceIndex);
+                console.log("trackList" + (trackList.length - 1));
+            }
+            if (currenSourceIndex > 0 && !(currenSourceIndex >= trackList.length)) {
+                backBtn.disabled = false;
+
+            }
+            if (currenSourceIndex == 0 && count > 0) {
+                nextBtn.disabled = false;
+
+            }/* else {*/
+            //    nextBtn.disabled = true;
+            //}
+
+                 //ChangeTrackName();
+            //reset input
+            inputFocus.value="";
+            inputFocus.disabled = false;
+            inputFocus.focus();
+            //reset audio text
+            audioText = document.getElementById("audioText").innerText.trim();
+
+            partOfLesson.innerText = TracknameList[currenSourceIndex];
+            source.src = "/Images/" + trackList[currenSourceIndex];
+            document.getElementById("audioText").innerText = DescribeList[currenSourceIndex];
+            audio.load();
+            audio.play();
+
+        }
+
+        //ChangeTrackName();
+        //Next audio
+  /*      audio.addEventListener('ended', playNextMusic);*/
+
+        partOfLesson.innerText = TracknameList[currenSourceIndex];
+        source.src = "/Images/" + trackList[currenSourceIndex];
+        audioText.innerText = DescribeList[currenSourceIndex];
+
+        audio.load();
+        /*  audio.play();*/
+
+
+        const backBtn = document.getElementById("backBtn");
+
+        backBtn.addEventListener('click', playBackMusic);
+        function playBackMusic() {
+
+            currenSourceIndex--;
+
+            if (currenSourceIndex >= trackList.length) {
+
+                x = count;
+                y = DurationList.reduce((total, currentValue) => total + currentValue);
+                scores = 10 * (11 - x / y);
+                scoreCurrent.innerText = scores;
+
+                audioText.innerText = "Finish!";
+                listenBtn.disabled = true;
+                pauseBtn.disabled = true;
+                retryBtn.disabled = true;
+                backBtn.disabled = true;
+                source.src = "/Images/" + trackList[0];
+
+
+            }
+            if (currenSourceIndex == 0) {
+                backBtn.disabled = true;
+            }
+
+            //ChangeTrackName();
+            //reset input
+            inputFocus.value = "";
+            inputFocus.disabled = false;
+            inputFocus.focus();
+            //reset audio text
+            audioText = document.getElementById("audioText").innerText.trim();
+
+            partOfLesson.innerText = TracknameList[currenSourceIndex];
+            source.src = "/Images/" + trackList[currenSourceIndex];
+            document.getElementById("audioText").innerText = DescribeList[currenSourceIndex];
+            audio.load();
+            audio.play();
+
+        }
+
+
+
+        let flag = true;
+        //Run audio
+        listenBtn.addEventListener("click", function () {
+            inputFocus.disabled = false;
+            inputFocus.focus();
+
+            audioSource.play();
+            listenBtn.style.display = "none";
+            pauseBtn.style.display = "block";
+            retryBtn.disabled = false;
+            //if (flag) {
+            //    startTimer();
+            //    flag = false;
+            //}
+            startStopTimer();
+            if (resetChart) {
+                chartAudioPause.push(Count_Audio_Pause);
+                chartAudioRetry.push(Count_Audio_Retry);
+                chartHint.push(Count_Audio_Hint);
+            }
+        })
+        //Pause audio
+        pauseBtn.addEventListener("click", function () {
+            audioSource.pause();
+            listenBtn.style.display = "block";
+            pauseBtn.style.display = "none";
+            listenBtn.disabled = false;
+
+        })
+
+        //Choose speed
+        window.addEventListener("load", function () {
+            audioSource.playbackRate = 0.75;
+            const levelLesson = document.getElementById("levelLesson").value;
+
+            if (levelLesson == 3) {
+                audioSource.playbackRate = 1.25;
+            }
+
+        })
+        speedOption.addEventListener("change", function () {
+            audioSource.playbackRate = speedOption.value;
+
+        })
+
+        //Retry audio
+
+        //retryBtn.addEventListener("click", function () {
+        //    audioSource.currentTime = 0;
+        //    audioSource.play();
+        //})
+        //Next audio
+        //const backBtn = document.getElementById("backBtn");
+        nextBtn.addEventListener("click", function () {
+            inputFocus.disabled = false;
+            playNextMusic();
+            inputFocus.focus();
+
+        })
+        //Back audio
+        backBtn.addEventListener("click", function () {
+            const levelLesson = document.getElementById("levelLesson").value;
+            if (levelLesson == 1) {
+                document.getElementById("correctWord").value = "";
+            }
+            inputText.disabled = false;
+            inputText.value = "";
+            listenBtn.style.display = "none";
+            pauseBtn.style.display = "block";
+            pauseBtn.disabled = false;
+            retryBtn.disabled = false;
+            if (currenSourceIndex == 0 || (currenSourceIndex < trackList.length -1)) {
+                nextBtn.disabled = false;
+            }
+        })
+        //Restart test
+        restartBtn.addEventListener("click", function () {
+            const levelLesson = document.getElementById("levelLesson").value;
+            //if (levelLesson == 1) {
+            //    document.getElementById("correctWord").value = "";
+            //}
+            if (levelLesson == 2 || levelLesson == 3) {
+                document.getElementById("correctWord").value = "";
+            }
+            //reset scores
+            scoreCurrent.innerText = 0;
+            scores = 0;
+            count = 0;
+            seconds = 0;
+            console.log("scores" + scores);
+            console.log("count" + count);
+            console.log("timer" + timer);
+            timerDisplay = "00:00:00";
+            clearInterval(timerId);
+            //startTimer();
+            startStopTimer();
+            inputText.disabled = false;
+            inputText.value = "";
+            inputText.focus();
+
+            listenBtn.style.display = "none";
+            pauseBtn.style.display = "block";
+
+            backBtn.disabled = true;
+            retryBtn.disabled = false;
+            pauseBtn.disabled = false;
+            //reset audio
+            currenSourceIndex = 0;;
+            partOfLesson.innerText = TracknameList[currenSourceIndex];
+            source.src = "/Images/" + trackList[currenSourceIndex];
+            document.getElementById("audioText").innerText = DescribeList[currenSourceIndex];
+            audio.load();
+            audio.play();
+
+
+
+            resetChart = true;
+            Count_Audio_Pause = 0;
+            Count_Audio_End = 0;
+            Count_Audio_Hint = 0;
+            Count_Audio_Retry = 0;
+            chartAudioPause.push(Count_Audio_Pause);
+            chartAudioRetry.push(Count_Audio_Retry);
+            chartHint.push(Count_Audio_Hint);
+        })
+        //Hint audio
+        function toggleDiv(div) {
+
+            if (div.style.display == "none") {
+                div.style.display = "block";
+            } else {
+                div.style.display = "none";
+            }
+        }
+
+
+        const hintVisibleBtn = document.getElementById("hintVisibleBtn");
+        hintVisibleBtn.addEventListener("click", function () {
+            const audioText = document.getElementById("audioText");
+            toggleDiv(audioText)
+            hintHideBtn.style.display = "block";
+            hintVisibleBtn.style.display = "none";
+
+
+        })
+        const hintHideBtn = document.getElementById("hintHideBtn");
+        hintHideBtn.addEventListener("click", function () {
+            const audioText = document.getElementById("audioText");
+            toggleDiv(audioText)
+            hintVisibleBtn.style.display = "block";
+            hintHideBtn.style.display = "none";
+
+        })
+        //focus input
+
+
+
+        //Check typed
+        const inputText = document.getElementById("inputText");
+        //LEVEL OF THE LESSON
+        const levelLesson = document.getElementById("levelLesson").value;
+
+        //if (levelLesson == 1) {
+        //    // người dùng chỉ cần nhập 3 ký tự đầu tiên thì hệ thống sẽ hoàn thành nguyên từ, người dùng sẽ nhập tiếp 3 từ tiếp theo, cứ tiếp tục cho đến hết.
+        //    function checkInput() {
+        //        audioText = document.getElementById("audioText").innerText.trim().toLowerCase();
+        //        let success = [];
+        //        let lyrics = audioText; // lyrics need compare
+        //        let arrLength = lyrics.trim().split(" ").length;
+
+        //        let word = lyrics; // lyrics need compare
+        //        let count = 0; // Khởi tạo biến đếm
+
+        //        var input = document.getElementById("inputText").value.toLowerCase().trim(); // Get input value and convert to lower case
+
+        //        let splitWord = word.split(" ");
+        //        let arr = Array.from(splitWord);
+        //        arr.forEach(element => {
+        //            console.log("count: " + count);
+        //            console.log("arr.length: " + arrLength);
+
+        //            // Compare the first 3 letters of the word with the first 3 letters in the input
+        //            if (element.substring(0, 3) === input.substring(0, 3)) {
+        //                // Nếu khớp, xóa giá trị input
+        //                let wordList = document.getElementById("correctWord").value;
+        //                wordList = wordList + element;
+        //                document.getElementById("correctWord").value = wordList + " ";
+        //                // Nếu tất cả các chữ cái đều khớp, in ra thông báo
+        //                success.push(element + "");
+
+        //                document.getElementById("inputText").value = "";
+        //                word = word.substring(word.indexOf(" ") + 1);
+        //                count++; // Tăng biến đếm lên 1
+
+        //            }
+        //            if (count === arrLength) { // Nếu biến đếm bằng độ dài của mảng arr
+        //                /*document.getElementById("inputText").disabled = true;*/ // Dừng lại bằng cách disable input
+        //                inputText.disabled = true;
+        //                playNextMusic();
+        //                backBtn.disabled = false;
+
+        //            }
+        //        })
+        //    }
+        //    inputText.addEventListener("input", checkInput);
+        //}
+        //else
+        if (levelLesson == 1) {
+// lyrics need compare
+
+            //let compareString = 1;
+            let currentIndex = 0;
+            const input = document.getElementById('inputText');
+            let countList = 0;
+            input.addEventListener('keyup', function () {
+                audioText = document.getElementById("audioText").innerText.trim();
+                let words = audioText.trim().split(" ");
+                for (let i = 0; i < words.length; i++) {
+                    words[i] = words[i].replace(/[.,?]/g, '');
+                }
+                const inputValue = input.value.trim();
+                const currentWord = words[currentIndex];
+                console.log("currentIndex " + currentIndex);
+                console.log("inputValue " + inputValue);
+                console.log("currentWord " + currentWord);
+                if (inputValue.toLowerCase() === currentWord.toLowerCase()) {
+                    input.value = '';
+                    document.getElementById('correctWord').value = document.getElementById('correctWord').value + words[currentIndex] + " ";
+                    document.getElementById('wrongWord').value = "";
+                    currentIndex++;
+                    //compareString++;
+                    if (currentIndex < words.length) {
+                        //const nextWord = words[currentIndex];
+                        if (/^[A-Z]/.test(words[currentIndex])) {
+                            document.getElementById('hint').textContent = words[currentIndex];
+                        } else {
+                            document.getElementById('hint').textContent = '';
+                        }
+                    }
+                    else {
+                        countList++;
+                        document.getElementById('hint').textContent = '';
+                        currentIndex = 0;
+                        document.getElementById('correctWord').value = "";
+                        playNextMusic();
+                        backBtn.disabled = false;
+
+                    }
+
+                } else {
+                    document.getElementById('wrongWord').value = inputValue;
+                }
+
+                if (!((document.getElementById('wrongWord').value) === (inputValue.toLowerCase()).substring(0, currentWord.length-1))) {
+                    input.value = "";
+                    console.log("tttttt")
+                }
+
+                //if (!((document.getElementById('wrongWord').value) === (inputValue.toLowerCase()).substring(0, compareString))) {
+                //    input.value = "";
+                //    console.log("tttttt")
+                //}
+            });
+
+        }
+        else if (levelLesson == 2 || levelLesson == 3) {
+
+
+
+            let currentIndex = 0;
+            const input = document.getElementById('inputText');
+            let countList = 0;
+            input.addEventListener('input', function () {
+                audioText = document.getElementById("audioText").innerText.trim();
+                let words = audioText.trim().split(" ");
+                for (let i = 0; i < words.length; i++) {
+                    words[i] = words[i].replace(/[.,?]/g, '');
+                }
+                const inputValue = input.value.trim();
+                const currentWord = words[currentIndex];
+                console.log("currentIndex " + currentIndex);
+                console.log("inputValue " + inputValue);
+                console.log("currentWord " + currentWord);
+                if (inputValue.toLowerCase() === currentWord.toLowerCase()) {
+                    input.value = '';
+                    document.getElementById('correctWord').value = document.getElementById('correctWord').value + words[currentIndex] + " ";
+
+                    currentIndex++;
+
+
+                    if (currentIndex < words.length) {
+                        document.getElementById('wrongWord').value = "";
+
+
+                    }
+                    else {
+                        countList++;
+
+                        currentIndex = 0;
+
+                        playNextMusic();
+                        backBtn.disabled = false;
+                        document.getElementById('correctWord').value = "";
+
+                    }
+
+                } else {
+                    document.getElementById('wrongWord').value = inputValue;
+                    //input.value = "";
+
+                }
+                if (!((document.getElementById('wrongWord').value) === (inputValue.toLowerCase()).substring(0, currentWord.length - 1))) {
+                    input.value = "";
+                    console.log("tttttt")
+                }
+            });
+
+        }
+        //sai là xóa lập tức chỉ cho nhập đúng không cho nhập sai
+        //else if (levelLesson == 2 || levelLesson == 3) {
+
+
+        //    //ban đầu
+        //    //LEVEL 3 - VERY HARD - Learners must enter each word correctly.
+        //    // người học phải nhập đúng từng ký tự trong bài nghe.
+
+        //    //audio speed = >= 1.25
+
+
+        //    //theo mô tả pdf
+        //    // level 2 <15s, level 3 > 20s
+        //    const checkType = function () {
+        //        audioText = document.getElementById("audioText").innerText.trim().toLowerCase();
+
+        //        let textTyped = document.getElementById("inputText").value.toLowerCase();
+        //        for (let i = 0; i < textTyped.length; i++) {
+        //            console.log("audioText:" + audioText[i]);
+        //            console.log("textTyped:" + textTyped[i]);
+        //            console.log("audioText:" + audioText);
+        //            if (audioText[i] === textTyped[i]) {
+        //                if (audioText === textTyped) {
+
+        //                    inputText.disabled = true;
+        //                    playNextMusic();
+        //                    backBtn.disabled = false;
+
+
+        //                    break;
+        //                }
+        //                console.log("T");
+        //            }
+
+        //            else {
+        //                inputText.value = inputText + textTyped.charAt(inputText.value.length - 1)
+        //                inputText.value = textTyped.substring(0, textTyped.length - 1);
+        //                console.log("F");
+
+        //            }
+        //        }
+        //    }
+        //    //need to re-edit. This is level 3 -very hard
+        //    inputText.addEventListener("keyup", checkType);
+        //}
+
+
+
+
+
+    </script>
+    <script>
+        // except chartX, the rest is chartY (chartHint, chartAudioEnd, chartLessonScore, chartAudioPause ,...)
+        let Count_Audio_End = 0;
+        let chartAudioEnd = [];
+        let Count_Audio_Pause = 0;
+        let chartAudioPause = [];
+        let Count_Audio_Retry = 0;
+        let chartAudioRetry = [];
+        let chartHint = [];
+        let Count_Audio_Hint = 0;
+
+        //line chart
+        let chartX = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20'];
+        let line_chart = new Chart();
+        const createChart = function () {
+            let chart = document.getElementById("linechart").getContext("2d");
+
+            line_chart = new Chart(chart, {
+                type: 'line',
+                data: {
+                    labels: chartX,
+                    datasets: [
+
+                        {
+                            // number of times click pause button
+                            //finish
+                            label: 'Click Pause',
+                            borderColor: 'black',
+                            backgroundColor: 'black',
+                            data: chartAudioPause,
+                            tension: 0.4,
+                        },
+
+                        {
+                            //finish
+                            //scores of the lesson
+                            label: 'Scores',
+                            borderColor: 'red',
+                            backgroundColor: 'red',
+                            data: chartLessonScore,
+                            tension: 0.4,
+                        },
+                        {
+                            //number of times audio play
+                            label: 'Misheard',
+                            borderColor: 'gray',
+                            backgroundColor: 'gray',
+                            data: chartAudioEnd,
+                            tension: 0.4,
+                        },
+                        {
+                            label: 'Retry',
+                            borderColor: 'yellow',
+                            backgroundColor: 'yellow',
+                            data: chartAudioRetry,
+                            tension: 0.4,
+                        }
+                        ,
+                        {
+                            label: 'Hint',
+                            borderColor: 'green',
+                            backgroundColor: 'green',
+                            data: chartHint,
+                            tension: 0.4,
+                        }
+                    ]
+                }
+            });
+        }
+        //line_chart.destroy();
+
+        createChart();
+
+
+        audio.addEventListener("timeupdate", function () {
+
+            if (audio.currentTime === 0 && !audio.paused && audio.loop) {
+
+                Count_Audio_End++;
+
+                if (resetChart) {
+
+                    chartAudioEnd.push(Count_Audio_End);
+                    resetChart = false;
+
+                }
+                else {
+                    chartAudioEnd[chartAudioEnd.length - 1] = Count_Audio_End;
+                }
+                if (Count_Audio_End > 0) {
+                    line_chart.destroy();
+                    createChart();
+                }
+                console.log("Looped " + Count_Audio_End + " times.");
+
+            }
+
+        });
+
+        pauseBtn.addEventListener("click", function () {
+
+            Count_Audio_Pause++;
+
+            if (chartAudioPause.length == 0) {
+
+                chartAudioPause.push(Count_Audio_Pause);
+                resetChart = false;
+
+            }
+            chartAudioPause[chartAudioPause.length - 1] = Count_Audio_Pause;
+
+
+
+            line_chart.destroy();
+            createChart();
+
+            console.log("pauseaudio :" + Count_Audio_Pause)
+
+
+
+        });
+        retryBtn.addEventListener("click", function () {
+
+            audioSource.currentTime = 0;
+            audioSource.play();
+            Count_Audio_Retry++;
+            if (chartAudioRetry.length == 0) {
+
+
+                chartAudioRetry.push(Count_Audio_Retry);
+
+            }
+            chartAudioRetry[chartAudioRetry.length - 1] = Count_Audio_Retry;
+
+            line_chart.destroy();
+            createChart();
+
+            console.log("retyaudio :" + Count_Audio_Retry)
+
+
+        });
+        hintVisibleBtn.addEventListener("click", function () {
+
+            Count_Audio_Hint++;
+            if (chartHint.length == 0) {
+
+
+                chartHint.push(Count_Audio_Hint);
+
+
+            }
+            chartHint[chartHint.length - 1] = Count_Audio_Hint;
+
+
+            line_chart.destroy();
+            createChart();
+
+            console.log("retyaudio :" + Count_Audio_Hint)
+
+
+
+        });
+    </script>
+
+    <script>
+        //keyboard shortcuts - các phím tắt
+        document.addEventListener("keydown", function (event) {
+            if (event.code === "ArrowUp") {
+                // Tăng âm lượng
+                if (audio.volume < 1.0) {
+                    audio.volume += 0.1;
+                }
+            } else if (event.code === "ArrowDown") {
+                // Giảm âm lượng
+                if (audio.volume > 0.0) {
+                    audio.volume -= 0.1;
+                }
+            } else if (event.code === "ArrowLeft") {
+                // Tua ngược 1s
+                audio.currentTime -= 1;
+            } else if (event.code === "ArrowRight") {
+                // Tua tới 1s
+                audio.currentTime += 1;
+            } else if (event.code === "Space") {
+                startStopTimer();
+                inputText.disabled = false;
+                inputText.focus();
+                if (audio.paused) {
+                    audio.play(); // Phát tiếp audio nếu đang tạm dừng
+                    listenBtn.style.display = "none";
+                    pauseBtn.style.display = "block";
+                } else {
+                    audio.pause(); // Ngưng audio nếu đang phát
+                    listenBtn.style.display = "block";
+                    pauseBtn.style.display = "none";
+
+                    //vẽ lại chart
+                    Count_Audio_Pause++;
+                    /* chartAudioPause[0] = Count_Audio_Pause;*/
+                    chartAudioPause[chartAudioPause.length - 1] = Count_Audio_Pause;
+
+                    line_chart.destroy();
+                    createChart();
+                }
+                chartAudioPause[chartAudioPause.length - 1] = Count_Audio_Pause;
+                if (resetChart) {
+                    chartAudioPause.push(Count_Audio_Pause);
+                    chartAudioRetry.push(Count_Audio_Retry);
+                    chartHint.push(Count_Audio_Hint);
+                }
+                line_chart.destroy();
+                createChart();
+            } else if (event.ctrlKey && event.code === "KeyM") {
+                audio.muted = !audio.muted;
+            }
+            else if (event.ctrlKey && event.code === "KeyZ") {
+
+                resetChart = true;
+                Count_Audio_Pause = 0;
+                Count_Audio_End = 0;
+                Count_Audio_Hint = 0;
+                Count_Audio_Retry = 0;
+                chartAudioPause.push(Count_Audio_Pause);
+                chartAudioRetry.push(Count_Audio_Retry);
+                chartHint.push(Count_Audio_Hint);
+
+
+                const levelLesson = document.getElementById("levelLesson").value;
+                //if (levelLesson == 1) {
+                //    document.getElementById("correctWord").value = "";
+                //}
+                if (levelLesson == 2 || levelLesson == 3) {
+                    document.getElementById("correctWord").value = "";
+                }
+                //reset scores
+                scoreCurrent.innerText = 0;
+                scores = 0;
+                count = 0;
+                seconds = 0;
+                console.log("scores" + scores);
+                console.log("count" + count);
+                console.log("timer" + timer);
+                timerDisplay = "00:00:00";
+                clearInterval(timerId);
+                //startTimer();
+                startStopTimer();
+                inputText.disabled = false;
+                inputText.value = "";
+                inputText.focus();
+
+                listenBtn.style.display = "none";
+                pauseBtn.style.display = "block";
+
+                backBtn.disabled = true;
+                retryBtn.disabled = false;
+                pauseBtn.disabled = false;
+                //reset audio
+                currenSourceIndex = 0;;
+                partOfLesson.innerText = TracknameList[currenSourceIndex];
+                source.src = "/Images/" + trackList[currenSourceIndex];
+                document.getElementById("audioText").innerText = DescribeList[currenSourceIndex];
+                audio.load();
+                audio.play();
+            }
+        });
+    </script>
+
+    <script>
+        window.addEventListener('beforeunload', function () {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.indexOf('HienCaCookie=') === 0) {
+                    document.cookie = "hienca=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    break;
+                }
+            }
+        });
+
+    </script>
+
+    <script>
+
+        const myCookie = getCookie('HienCaCookie');
+        if (myCookie != null) {
+            document.getElementById("NoCookieName").style.display = "flex";
+        } else {
+            document.getElementById("HascookieName").style.display = "flex";
+
+        }
+
+        function getCookie(name) {
+            const cookieString = document.cookie;
+            const cookies = cookieString.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith(name + '=')) {
+                    return cookie.substring(name.length + 1);
+                }
+            }
+            return null;
+        }
+
+            let sum = DurationList.reduce(function (a, b) {
+            return a + b;
+            }, 0);
+        document.getElementById("sumDuration").innerText = sum;
+
+    </script>
+
+</body>
+
+</html>

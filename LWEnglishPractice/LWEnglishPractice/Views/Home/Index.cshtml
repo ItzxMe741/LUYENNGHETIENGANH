@@ -1,0 +1,551 @@
+﻿@model IEnumerable<LWEnglishPractice.Entities.Lesson>
+@using LWEnglishPractice.Entities;
+@{
+    Layout = null;
+    //ListenAndWriteContext context = new ListenAndWriteContext();
+    //List<Lesson> lesson = context.Lesson.Where(a => a.Active == 1).ToList();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listen And Write English</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+    <link rel="stylesheet" href="~/Style/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Style/ListenAndWrite.css">
+
+</head>
+
+
+<body>
+    <div class="row " style="width: 100vw; height: 100vh; background-image: url('https://leverageedublog.s3.ap-south-1.amazonaws.com/blog/wp-content/uploads/2019/11/23173331/Best-Books-for-GRE.png'); background-position: center; background-repeat: no-repeat; background-size: cover; ">
+        <div class="col-md-2  border-bottom-0 border-top-0 border-right text-center mt-5">
+            <h3 class="text-center logoCVG">CVG ENGLISH</h3>
+            <div class="">
+                <div id="homeBtn" class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
+
+                    <a href="/Home/Index" style="text-decoration: none;" class="text-dark">
+                        <span style="font-size:32px; margin-right: 10px;">
+                            <i style="color: #58CC02;"
+                               class="fa-solid fa-house "></i>
+                        </span> LEARNING
+                    </a>
+                </div>
+                <div id="homeBtn" class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
+
+                    <a href="/Home/Statistics" style="text-decoration: none;" class="text-dark">
+                        <span style="font-size:32px; margin-right: 10px;">
+                            <i style="color: #58CC02;"
+                               class="fa-solid fa-house "></i>
+                        </span> STATISTICS
+                    </a>
+                </div>
+                <di id="rankingBtn" class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
+
+                    <a href="/Home/Ranking" style="text-decoration: none;" class="text-dark">
+                        <span style="font-size:32px; margin-right: 10px;">
+                            <i style="color: #58CC02;"
+                               class="fa-solid fa-ranking-star "></i>
+                        </span> RANKING
+
+                    </a>
+            </div>
+
+            
+            <div id="profileBtn" class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
+
+                <a href="/Home/Profile" style="text-decoration: none;" class="text-dark">
+                    <span style="font-size:32px; margin-right: 20px;">
+                        <i style="color: #58CC02;"
+                           class="fa-solid fa-user "></i>
+                    </span> PROIFILE
+                </a>
+            </div>
+
+            <div class=" align-items-center rounded-3 sidebar p-4 pt-0 pb-0" id="NoCookieName" style="display:none">
+
+                <a href="/Login/Logout" style="text-decoration: none;" class="text-dark">
+                    <span style="font-size:32px; margin-right: 20px;">
+
+                        <i style="color: red;" class="fa-solid fa-power-off"></i>
+                    </span> LOG OUT
+                </a>
+            </div>
+            <div class=" align-items-center rounded-3 sidebar p-4 pt-0 pb-0" id="HascookieName" style="display:none">
+
+                <a href="/Login/Login" style="text-decoration: none;" class="text-dark">
+                    <span style="font-size:32px; margin-right: 20px;">
+
+                        <i style="color: #58CC02;" class="fa-solid fa-user-plus"></i>
+                    </span> LOG IN
+                </a>
+            </div>
+
+            @*<div class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
+
+                <a href="/Login/Logout" style="text-decoration: none;" class="text-dark">
+                    <span style="font-size:32px; margin-right: 20px;">
+
+                        <i style="color: red;" class="fa-solid fa-power-off"></i>
+                    </span> LOG OUT
+                </a>
+            </div>*@
+        </div>
+        <div class="col-md-10" style="max-height: 100vh; overflow-y:scroll; border-left: 1px solid #ccc;">
+            <div id="home" class="mt-2 p-5 fade">
+
+                <div class="">
+                    <div class="row">
+                        <div class="col-md-9">
+                            @foreach (var item in Model)
+                            {
+
+                                @if (item.IdlevelNavigation.Level1 == 1)
+                                {
+                                    <div class="p-3 mt-2 text-white w-75 m-auto"
+                                         style="background-color: #58CC02; border-radius: 10px; position: relative;">
+                                        <a href="/Home/Learning/@item.Idlesson" style="text-decoration:none; color:#fff">
+                                            <h5>Lesson Name: @item.Lessonanme</h5>
+                                            <p style="margin-bottom:0">Describe: @item.Describe</p>
+                                            <p>Level: @item.IdlevelNavigation.Level1</p>
+                                            @if (item.Datecreate != null)
+                                            {
+                                                DateTime Datecreate = (DateTime)item.Datecreate;
+                                                <span class="  text-center pl-2 pr-2"
+                                                      style="position: absolute;right: 10px; top: 15px;font-weight: bold; min-width: 100px;  border-radius: 20px; color:#fff;">
+                                                    <i class="fas fa-clock"></i> Upload Date: @Datecreate.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)
+                                                </span>
+                                            }
+
+                                        </a>
+
+                                    </div>
+                                    @*<div class="row">
+                                        <div class="col-md-4 col-sm-2">
+                                            <div class="card" style="width: 18rem;">
+                                                <a href="/Home/Learning/@item.Idlesson" style="text-decoration:none; color:#fff">
+                                                    <img src="~/Images/logo.jpg" class="card-img-top" alt="...">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">@item.Lessonanme</h5>
+                                                        <p class="card-text">@item.Describe</p>
+                                                        @if (item.Datecreate != null)
+                                                        {
+                                                            DateTime Datecreate = (DateTime)item.Datecreate;
+                                                            <span class="  text-center pl-2 pr-2"
+                                                                  style="position: absolute;right: 10px; top: 15px;font-weight: bold; min-width: 100px;  border-radius: 20px; color:#fff;">
+                                                                <i class="fas fa-clock"></i> Upload Date: @Datecreate.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)
+                                                            </span>
+                                                        }
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                }
+                                else if (item.IdlevelNavigation.Level1 == 2)
+                                {
+                                    <div class="p-3 mt-2 text-white w-75 m-auto"
+                                         style="background-color: #ff8400d9; border-radius: 10px; position: relative;">
+                                        <a href="/Home/Learning/@item.Idlesson" style="text-decoration:none; color:#fff">
+                                            <h5>Lesson Name: @item.Lessonanme</h5>
+                                            <p style="margin-bottom:0">Describe: @item.Describe</p>
+                                            <p>Level: @item.IdlevelNavigation.Level1</p>
+                                            @if (item.Datecreate != null)
+                                            {
+                                                DateTime Datecreate = (DateTime)item.Datecreate;
+                                                <span class="  text-center pl-2 pr-2"
+                                                      style="position: absolute;right: 10px; top: 15px;font-weight: bold; min-width: 100px;  border-radius: 20px; color:#fff;">
+                                                    <i class="fas fa-clock"></i> Upload Date: @Datecreate.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)
+                                                </span>
+                                            }
+
+                                        </a>
+
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="p-3 mt-2 text-white w-75 m-auto"
+                                         style="background-color: #e30e0ed9; border-radius: 10px; position: relative;">
+                                        <a href="/Home/Learning/@item.Idlesson" style="text-decoration:none; color:#fff">
+                                            <h5>Lesson Name: @item.Lessonanme</h5>
+                                            <p style="margin-bottom:0">Describe: @item.Describe</p>
+                                            <p>Level: @item.IdlevelNavigation.Level1</p>
+                                            @if (item.Datecreate != null)
+                                            {
+                                                DateTime Datecreate = (DateTime)item.Datecreate;
+                                                <span class="  text-center pl-2 pr-2"
+                                                      style="position: absolute;right: 10px; top: 15px;font-weight: bold; min-width: 100px;  border-radius: 20px; color:#fff;">
+                                                    <i class="fas fa-clock"></i> Upload Date: @Datecreate.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)
+                                                </span>
+                                            }
+
+                                        </a>
+
+                                    </div>
+                                }
+                            }
+
+                        </div>
+
+                        <div class="col-md-3">
+                            @*<h3 class="text-center"> CHOOSE LEVEL</h3>*@
+                            <div class="row p-2 pt-4" style="position:fixed">
+                                <div class="rounded-circle " style="cursor: pointer;">
+                                    <div class="rounded-circle "
+                                         style="background-color: #58CC02; width: 90px;  height: 90px; position: relative; margin-left: 40%; border: 10px solid #E5E5E5">
+                                        <a href="/Home/Index/1" style="text-decoration:none; color:#fff">
+                                            <span style="position: absolute;left: 7px; top:-5px; font-size: 50px; ">
+
+                                                <i class="fa-solid fa-star text-white"></i>
+                                            </span>
+                                            <span class="  text-center pl-2 pr-2"
+                                                  style="position: absolute;left: -15px; top: 15px;font-weight: bold; min-width: 100px;  border-radius: 20px; color:#58CC02; font-size:24px">
+                                                1
+                                            </span>
+                                        </a>
+
+                                    </div>
+                                </div>
+                                <div class="rounded-circle mt-2" style="cursor: pointer;">
+                                    <div class="rounded-circle "
+                                         style="background-color: #ff8400d9; width: 90px; height: 90px; position: relative; margin-left: 40%; border: 10px solid #E5E5E5">
+                                        <a href="/Home/Index/2" style="text-decoration:none; color:#fff">
+
+                                            <span style="position: absolute;left: 7px; top:-5px; font-size: 50px; ">
+                                                <i class="fa-solid fa-star text-white"></i>
+                                            </span>
+                                            <span class="  text-center pl-2 pr-2"
+                                                  style="position: absolute; left: -15px; top: 15px; font-weight: bold; min-width: 100px; border-radius: 20px; color: #ff8400d9; font-size: 24px ">
+                                                2
+                                            </span>
+                                        </a>
+
+                                    </div>
+                                </div>
+                                <div class="rounded-circle mt-2" style="cursor: pointer;">
+                                    <div class="rounded-circle "
+                                         style="background-color: #e30e0ed9; width: 90px; height: 90px; position: relative; margin-left: 40%; border: 10px solid #E5E5E5">
+                                        <a href="/Home/Index/3" style="text-decoration:none; color:#fff">
+
+                                            <span style="position: absolute;left: 7px; top:-5px; font-size: 50px; ">
+
+                                                <i class="fa-solid fa-star text-white"></i>
+
+                                            </span>
+                                            <span class="  text-center pl-2 pr-2"
+                                                  style="position: absolute; left: -15px; top: 15px; font-weight: bold; min-width: 100px; border-radius: 20px; color: #e30e0ed9; font-size: 24px">
+                                                3
+                                            </span>
+                                        </a>
+
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <form class="d-flex" role="search" asp-action="Index" asp-controller="Home" method="get">
+                                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" value="@ViewBag.SearchText">
+                                        <input type="hidden" name="id" id="idSearchLesson" />
+                                        <script>
+                                            let href = window.location.href;
+
+                                            // Tạo đối tượng Location từ href
+                                            let locations = new URL(href);
+
+                                            // Lấy giá trị của pathname
+                                            let pathnames = locations.pathname;
+
+                                            // Tách chuỗi pathname để lấy giá trị cuối cùng (số 1)
+                                            let parts = pathnames.split('/');
+                                            let value = parts[parts.length - 1];
+                                            document.getElementById('idSearchLesson').value = value;
+                                        </script>
+                                        <button class="btn btn-outline-success" type="submit">Search</button>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <script>
+        //Navigation
+        const homeBtn = document.getElementById("homeBtn");
+        const rankingBtn = document.getElementById("rankingBtn");
+        const learningBtn = document.getElementById("learningBtn");
+        const profileBtn = document.getElementById("profileBtn");
+        const home = document.getElementById("home");
+        const ranking = document.getElementById("ranking");
+        const learning = document.getElementById("learning");
+        const profile = document.getElementById("profile");
+
+        window.addEventListener("load", function () {
+            home.style.display = "block";
+            homeBtn.style.backgroundColor = "#DDF4FF";
+            homeBtn.style.border = "2px solid #84D8FF";
+
+            rankingBtn.style.backgroundColor = "";
+            rankingBtn.style.border = "none";
+
+            learningBtn.style.backgroundColor = "";
+            learningBtn.style.border = "none";
+
+            profileBtn.style.backgroundColor = "";
+            profileBtn.style.border = "none";
+
+            ranking.style.display = "none";
+            learning.style.display = "none";
+            profile.style.display = "none";
+        })
+        homeBtn.addEventListener("click", function () {
+            home.style.display = "block";
+            homeBtn.style.backgroundColor = "#DDF4FF";
+            homeBtn.style.border = "2px solid #84D8FF";
+
+            rankingBtn.style.backgroundColor = "";
+            rankingBtn.style.border = "none";
+
+            learningBtn.style.backgroundColor = "";
+            learningBtn.style.border = "none";
+
+            profileBtn.style.backgroundColor = "";
+            profileBtn.style.border = "none";
+
+            ranking.style.display = "none";
+            learning.style.display = "none";
+            profile.style.display = "none";
+        });
+        rankingBtn.addEventListener("click", function () {
+            ranking.style.display = "block";
+            rankingBtn.style.backgroundColor = "#DDF4FF";
+            rankingBtn.style.border = "2px solid #84D8FF";
+
+            homeBtn.style.backgroundColor = "";
+            homeBtn.style.border = "none";
+
+            learningBtn.style.backgroundColor = "";
+            learningBtn.style.border = "none";
+
+            profileBtn.style.backgroundColor = "";
+            profileBtn.style.border = "none";
+
+            home.style.display = "none";
+            learning.style.display = "none";
+            profile.style.display = "none";
+        });
+        learningBtn.addEventListener("click", function () {
+            learning.style.display = "block";
+            learningBtn.style.backgroundColor = "#DDF4FF";
+            learningBtn.style.border = "2px solid #84D8FF";
+
+            rankingBtn.style.backgroundColor = "";
+            rankingBtn.style.border = "none";
+
+            homeBtn.style.backgroundColor = "";
+            homeBtn.style.border = "none";
+
+            profileBtn.style.backgroundColor = "";
+            profileBtn.style.border = "none";
+
+            home.style.display = "none";
+            ranking.style.display = "none";
+            profile.style.display = "none";
+        });
+        profileBtn.addEventListener("click", function () {
+            profile.style.display = "block";
+            profileBtn.style.backgroundColor = "#DDF4FF";
+            profileBtn.style.border = "2px solid #84D8FF";
+
+            rankingBtn.style.backgroundColor = "";
+            rankingBtn.style.border = "none";
+
+            learningBtn.style.backgroundColor = "";
+            learningBtn.style.border = "none";
+
+            homeBtn.style.backgroundColor = "";
+            homeBtn.style.border = "none";
+
+            home.style.display = "none";
+            ranking.style.display = "none";
+            learning.style.display = "none";
+        });
+
+
+        //Run audio
+        const listenBtn = document.getElementById("listenBtn");
+        const pauseBtn = document.getElementById("pauseBtn");
+        const audioSource = document.getElementById("audioSource");
+        listenBtn.addEventListener("click", function () {
+            audioSource.play();
+            listenBtn.style.display = "none";
+            pauseBtn.style.display = "block";
+        })
+        //Pause audio
+        pauseBtn.addEventListener("click", function () {
+            audioSource.pause();
+            listenBtn.style.display = "block";
+            pauseBtn.style.display = "none";
+        })
+
+        //Choose speed
+        const speedOption = document.getElementById("speedOption");
+        window.addEventListener("load", function () {
+            audioSource.playbackRate = 1;
+
+        })
+        speedOption.addEventListener("change", function () {
+            audioSource.playbackRate = speedOption.value;
+
+        })
+
+        //Retry audio
+        const retryBtn = document.getElementById("retryBtn");
+        retryBtn.addEventListener("click", function () {
+            audioSource.currentTime = 0;
+        })
+        //Next audio
+        const nextBtn = document.getElementById("nextBtn");
+        nextBtn.addEventListener("click", function () {
+            audioSource.pause();
+            audioSource.src = "./assets/1-2.mp3";
+            inputText.disabled = false;
+            inputText.value = "";
+            audioSource.play();
+
+        })
+
+        //Hint audio
+        function toggleDiv(div) {
+
+            if (div.style.display == "none") {
+                div.style.display = "block";
+            } else {
+                div.style.display = "none";
+            }
+        }
+        const hintVisibleBtn = document.getElementById("hintVisibleBtn");
+        hintVisibleBtn.addEventListener("click", function () {
+            const audioText = document.getElementById("audioText");
+            toggleDiv(audioText)
+            hintHideBtn.style.display = "block";
+            hintVisibleBtn.style.display = "none";
+
+
+        })
+        const hintHideBtn = document.getElementById("hintHideBtn");
+        hintHideBtn.addEventListener("click", function () {
+            const audioText = document.getElementById("audioText");
+            toggleDiv(audioText)
+            hintVisibleBtn.style.display = "block";
+            hintHideBtn.style.display = "none";
+
+        })
+
+        //Check word typed
+
+
+
+
+        //Check a char typed
+        const inputText = document.getElementById("inputText");
+        const scoreCurrent = document.getElementById("score");
+        const audioText = document.getElementById("audioText").innerText.trim();
+        let textCheck = audioText;
+        let score = 0;
+
+        const checkType = function () {
+            let textTyped = document.getElementById("inputText").value;
+            for (let i = 0; i < textTyped.length; i++) {
+                console.log("audioText:" + audioText[i]);
+                console.log("textTyped:" + textTyped[i]);
+                console.log("audioText:" + audioText);
+                if (audioText[i] === textTyped[i]) {
+                    if (document.getElementById("audioText").innerText.trim() === textTyped) {
+                        score += 100;
+                        scoreCurrent.innerText = score;
+                        console.log("BRE:");
+                        inputText.disabled = true;
+                        break;
+                    }
+                    console.log("T");
+                }
+
+                else {
+                    inputText.value = textTyped.substring(0, textTyped.length - 1);
+                    console.log("F");
+
+                }
+            }
+        }
+        // inputText.addEventListener("input", checkType);
+
+
+
+
+        //Edit profile
+        const editProfileBtn = document.getElementById("editProfileBtn");
+        const editProfileForm = document.getElementById("editProfileForm");
+
+        editProfileBtn.addEventListener("click", function () {
+            toggleDiv(editProfileForm);
+        });
+
+    </script>
+
+    <script>
+        window.addEventListener('beforeunload', function () {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.indexOf('HienCaCookie=') === 0) {
+                    document.cookie = "hienca=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    break;
+                }
+            }
+        });
+
+    </script>
+    <script>
+
+        const myCookie = getCookie('HienCaCookie');
+        if (myCookie != null) {
+            document.getElementById("NoCookieName").style.display = "flex";
+        } else {
+            document.getElementById("HascookieName").style.display = "flex";
+
+        }
+
+        function getCookie(name) {
+            const cookieString = document.cookie;
+            const cookies = cookieString.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith(name + '=')) {
+                    return cookie.substring(name.length + 1);
+                }
+            }
+            return null;
+        }
+
+
+
+    </script>
+</body>
+
+</html>

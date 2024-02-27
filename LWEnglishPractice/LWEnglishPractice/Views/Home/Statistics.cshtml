@@ -1,0 +1,357 @@
+﻿@model IEnumerable<LWEnglishPractice.Entities.History>
+
+@using LWEnglishPractice.Entities;
+@{
+    Layout = null;
+
+
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listen And Write English</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="~/Style/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Style/ListenAndWrite.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+</head>
+
+
+<body>
+
+    <div class="row " style="width: 100vw; height: 100vh; ">
+        <div class="col-md-2 border border-bottom-0 border-top-0 border-right text-center" style="background-image: url('https://leverageedublog.s3.ap-south-1.amazonaws.com/blog/wp-content/uploads/2019/11/23173331/Best-Books-for-GRE.png'); background-position: left; background-repeat: no-repeat; background-size: cover;">
+            <div class=" mt-5">
+                <h3 class="text-center logoCVG">CVG ENGLISH</h3>
+                <div class="">
+                    <div id="homeBtn" class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
+
+                        <a href="/Home/Index" style="text-decoration: none;" class="text-dark">
+                            <span style="font-size:32px; margin-right: 10px;">
+                                <i style="color: #58CC02;"
+                                   class="fa-solid fa-house "></i>
+                            </span> LEARNING
+                        </a>
+                    </div>
+                    <div id="homeBtn" class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
+
+                        <a href="/Home/Statistics" style="text-decoration: none;" class="text-dark">
+                            <span style="font-size:32px; margin-right: 10px;">
+                                <i style="color: #58CC02;"
+                                   class="fa-solid fa-house "></i>
+                            </span> STATISTICS
+                        </a>
+                    </div>
+                    <di id="rankingBtn" class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
+
+                        <a href="/Home/Ranking" style="text-decoration: none;" class="text-dark">
+                            <span style="font-size:32px; margin-right: 10px;">
+                                <i style="color: #58CC02;"
+                                   class="fa-solid fa-ranking-star "></i>
+                            </span> RANKING
+
+                        </a>
+                </div>
+                <div id="profileBtn" class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
+
+                    <a href="/Home/Profile" style="text-decoration: none;" class="text-dark">
+                        <span style="font-size:32px; margin-right: 20px;">
+                            <i style="color: #58CC02;"
+                               class="fa-solid fa-user "></i>
+                        </span> PROIFILE
+                    </a>
+                </div>
+                
+                <div class=" align-items-center rounded-3 sidebar p-4 pt-0 pb-0" id="NoCookieName" style="display:none">
+
+                    <a href="/Login/Logout" style="text-decoration: none;" class="text-dark">
+                        <span style="font-size:32px; margin-right: 20px;">
+
+                            <i style="color: red;" class="fa-solid fa-power-off"></i>
+                        </span> LOG OUT
+                    </a>
+                </div>
+                <div class=" align-items-center rounded-3 sidebar p-4 pt-0 pb-0" id="HascookieName" style="display:none">
+
+                    <a href="/Login/Login" style="text-decoration: none;" class="text-dark">
+                        <span style="font-size:32px; margin-right: 20px;">
+
+                            <i style="color: #58CC02;" class="fa-solid fa-user-plus"></i>
+                        </span> LOG IN
+                    </a>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-10 pb-5 border border-bottom-0 border-left-0 border-top-0 border-right"
+             style="max-height: 100vh; overflow-y:scroll">
+
+
+            <div id="learning" class="fade">
+
+                @if (Model.Count() > 0)
+                {
+                    <div class="mt-2">
+                        <h1 class="text-center">HISTORY</h1>
+                    </div>
+
+                    <div class="mt-2">
+                        @*//chart*@
+                        <canvas id="linechartDay" class="w-100" style="max-height: 50vh;"></canvas>
+                    </div>
+
+                    <div class="mt-5">
+                        @*//chart*@
+                        <canvas id="linechart" class="w-100" style="max-height: 50vh;"></canvas>
+                    </div>
+
+
+                    <div class="mt-5">
+                        @*//chart*@
+                        <canvas id="linechartYear" class="w-100" style="max-height: 50vh;"></canvas>
+                    </div>
+
+                }
+                else
+                {
+                    <div class="mt-2">
+                        <h1 class="text-center">NO HISTORY</h1>
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        let myArr =@Html.Raw(ViewBag.dataStatistics);
+        let data = myArr;
+
+
+        /*  theo tháng năm*/
+
+        let scoresByMonth = new Map();
+
+        // Loop through the data and update the scores for each month
+        for (let item of data) {
+            let date = new Date(item.Finishdate);
+            let monthYear = date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+            let score = item.Score;
+
+            if (scoresByMonth.has(monthYear)) {
+                scoresByMonth.set(monthYear, scoresByMonth.get(monthYear) + score);
+            } else {
+                scoresByMonth.set(monthYear, score);
+            }
+        }
+
+        // Convert the Map to an array of key-value pairs
+        let chartData = Array.from(scoresByMonth, ([label, value]) => ({ label, value }));
+
+        // Display the chart data
+        console.log(chartData);
+        let labels = chartData.map(data => {
+            let dateObj = new Date(data.Finishdate);
+            if (isNaN(dateObj.getTime())) {
+                // handle invalid date input
+                return null;
+            }
+            return dateObj.toLocaleDateString('en-GB', { month: 'long' });
+        });
+        labels.sort(function (a, b) {
+            let monthA = new Date(Date.parse('01 ' + a)).getMonth();
+            let monthB = new Date(Date.parse('01 ' + b)).getMonth();
+            return monthA - monthB;
+        });
+        let labelValues = chartData.map(data => data.label);
+        let values = chartData.map(data => data.value);
+        const ctx = document.getElementById('linechart');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labelValues,
+                datasets: [{
+                    label: 'Statistics by month',
+                    data: values,
+                    borderWidth: 1,
+                    backgroundColor: '#198754',
+                    barThickness: 120
+
+
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+
+
+       /*  theo ngày*/
+        let yy = myArr.map(obj => obj[Object.keys(obj)[1]]);
+        let xx = myArr.map(obj => obj[Object.keys(obj)[3]]);
+
+
+        for (let i = 0; i < xx.length; i++) {
+            xx[i] = xx[i].split('T')[0];
+            let parts = xx[i].split('-');
+            xx[i] = parts[2] + '-' + parts[1] + '-' + parts[0];
+        }
+
+        console.log(xx);
+        const dates = xx;
+        const formattedDates = dates.map(date => {
+            const dateObj = new Date(date);
+            if (isNaN(dateObj.getTime())) {
+                // handle invalid date input
+                return null;
+            }
+            return dateObj.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        });
+
+        const linechartDay = document.getElementById('linechartDay');
+
+        new Chart(linechartDay, {
+            type: 'bar',
+            data: {
+                labels: xx,
+                datasets: [{
+                    label: 'Statistics by day',
+                    data: yy,
+                    borderWidth: 1,
+                    backgroundColor: '#20c997',
+                    barThickness: 120
+
+
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+
+
+
+        //theo năm
+        let scoresByYear = new Map();
+
+        // Loop through the data and update the scores for each year
+        for (let item of data) {
+            let date = new Date(item.Finishdate);
+            let year = date.getFullYear();
+            let score = item.Score;
+
+            if (scoresByYear.has(year)) {
+                scoresByYear.set(year, scoresByYear.get(year) + score);
+            } else {
+                scoresByYear.set(year, score);
+            }
+        }
+
+        // Convert the Map to an array of key-value pairs
+        let chartDataYear = Array.from(scoresByYear, ([label, value]) => ({ label: label.toString(), value }));
+        // Tách label và value ra 2 mảng riêng
+        let labelsYear = chartDataYear.map(item => item.label);
+        let valuesYear = chartDataYear.map(item => item.value);
+
+        // Hiển thị các mảng
+        console.log(labelsYear);
+        console.log(valuesYear);
+
+        const linechartYear = document.getElementById('linechartYear');
+
+        new Chart(linechartYear, {
+            type: 'bar',
+            data: {
+                labels: labelsYear,
+                datasets: [{
+                    label: 'Statistics by year',
+                    data: valuesYear,
+                    borderWidth: 1,
+                    backgroundColor: '#022a18',
+                    barThickness: 120
+                }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+
+    </script>
+
+
+    <script>
+        window.addEventListener('beforeunload', function () {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.indexOf('HienCaCookie=') === 0) {
+                    document.cookie = "hienca=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    break;
+                }
+            }
+        });
+
+    </script>
+
+    <script>
+
+        const myCookie = getCookie('HienCaCookie');
+        if (myCookie != null) {
+            document.getElementById("NoCookieName").style.display = "flex";
+        } else {
+            document.getElementById("HascookieName").style.display = "flex";
+
+        }
+
+        function getCookie(name) {
+            const cookieString = document.cookie;
+            const cookies = cookieString.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith(name + '=')) {
+                    return cookie.substring(name.length + 1);
+                }
+            }
+            return null;
+        }
+
+
+
+    </script>
+
+</body>
+
+</html>
